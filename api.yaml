@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: DUC API Services
-  description: This is a API which describes how to use our available services.
+  description: This is Web API which describes how to use our available services.
   termsOfService: 'https://ducapp.net/statics/en/terms_conditions'
   contact:
     email: support@ducapp.com
