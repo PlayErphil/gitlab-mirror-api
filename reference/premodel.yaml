@@ -1,7 +1,8 @@
 swagger: '2.0'
 info:
-  title: DUC API Services
-  description: This is a API which describes how to use our available services.
+  title: DUC App API
+  description: |
+    Welcome to the DucApp API documentation. You can explore the different ways to use our API and choose the right one for you below.
   termsOfService: 'https://ducapp.net/statics/en/terms_conditions'
   contact:
     email: support@ducapp.com
@@ -11,7 +12,6 @@ info:
     url: 'https://ducapp.net/'
   version: 1.0.0
 host: api.ducapp.com
-basePath: /
 tags:
   - name: Authentication
     description: REST API for authentication related services.
@@ -38,6 +38,11 @@ paths:
       responses:
         '200':
           description: OK
+          schema:
+            type: object
+            properties:
+              '':
+                type: string
         '400':
           description: Bad Request
           schema:
@@ -58,7 +63,18 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Session'
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              uwu:
+                type: integer
+              a:
+                type: boolean
+          examples: {}
+          headers: {}
         '400':
           description: Bad Request
           schema:
@@ -206,7 +222,7 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/TopUpTransferErrorResponse'
-  transaction/p2p:
+  /transaction/p2p:
     post:
       operationId: p2P_Transfer
       tags:
