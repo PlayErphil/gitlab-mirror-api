@@ -5,6 +5,8 @@ info:
   description: |-
     # Introduction
     Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.
+
+    # Errors
 servers:
   - url: 'http://localhost:3000'
 paths:
@@ -20,7 +22,9 @@ paths:
       summary: Get User Info by User ID
       tags: []
       responses:
-        '200':
+        '201':
+          description: Created
+        '202':
           description: User Found
           content:
             application/json:
@@ -96,27 +100,6 @@ paths:
     post:
       summary: Create New User
       operationId: post-user
-      responses:
-        '200':
-          description: User Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                New User Bob Fellow:
-                  value:
-                    id: 12
-                    firstName: Bob
-                    lastName: Fellow
-                    email: bob.fellow@gmail.com
-                    dateOfBirth: '1996-08-24'
-                    emailVerified: false
-                    createDate: '2020-11-18'
-        '400':
-          description: Missing Required Information
-        '409':
-          description: Email Already Taken
       requestBody:
         content:
           application/json:
@@ -146,6 +129,14 @@ paths:
                   dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
+      responses:
+        '200':
+          description: OK
+  /items:
+    get:
+      summary: getItems
+      tags: []
+      operationId: get-items
 components:
   schemas:
     User:
@@ -188,3 +179,12 @@ components:
         - lastName
         - email
         - emailVerified
+  responses:
+    BadRequest:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string

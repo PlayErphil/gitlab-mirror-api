@@ -12046,7 +12046,15 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           }
-        }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query"
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -12199,7 +12207,12 @@
         "type": "string",
         "description": "The resource ID. Defaults to UUID v4.",
         "maxLength": 50,
-        "example": "4f6cf35x-2c4y-483z-a0a9-158621f77a21"
+        "example": "4f6cf35x-2c4y-483z-a0a9-158621f77a21",
+        "x-examples": {
+          "example-1": {
+            "value": "4f6cf35x-2c4y-483z-a0a9-158621f77a21"
+          }
+        }
       },
       "CurrencyCode": {
         "type": "string",
@@ -12452,17 +12465,8 @@
           }
         ],
         "title": "",
-        "x-examples": {
-          "example-1": {
-            "value": {
-              "type": "http://example.com",
-              "status": 400,
-              "title": "string",
-              "detail": "string",
-              "error": "string"
-            }
-          }
-        }
+        "x-examples": {},
+        "x-internal": false
       },
       "ValidationErrorExtensions": {
         "type": "object",
