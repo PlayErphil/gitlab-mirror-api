@@ -1,142 +1,132 @@
 openapi: 3.1.0
 info:
-  title: duc.v1
+  title: DUC App Developer
   version: '1.0'
   description: |-
     # Introduction
     Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.
 
     # Errors
+  termsOfService: 'https://ducapp.com/statics/en/terms_conditions'
+  contact:
+    email: support@ducapp.com
+    name: DUC App Support
+  license:
+    name: © Copyright 2021 D.U.C. App Corporation. All rights reserved.
 servers:
-  - url: 'http://localhost:3000'
+  - {}
 paths:
-  '/users/{userId}':
-    parameters:
-      - schema:
-          type: integer
-        name: userId
-        in: path
-        required: true
-        description: Id of an existing user.
-    get:
-      summary: Get User Info by User ID
-      tags: []
-      responses:
-        '201':
-          description: Created
-        '202':
-          description: User Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Get User Alice Smith:
-                  value:
-                    id: 142
-                    firstName: Alice
-                    lastName: Smith
-                    email: alice.smith@gmail.com
-                    dateOfBirth: '1997-10-31'
-                    emailVerified: true
-                    signUpDate: '2019-08-24'
-        '404':
-          description: User Not Found
-      operationId: get-users-userId
-      description: Retrieve the information of the user with the matching user ID.
-    patch:
-      summary: Update User Information
-      operationId: patch-users-userId
+  /transactions/add/card:
+    post:
+      summary: ''
+      operationId: AddFundsCard
       responses:
         '200':
-          description: User Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Updated User Rebecca Baker:
-                  value:
-                    id: 13
-                    firstName: Rebecca
-                    lastName: Baker
-                    email: rebecca@gmail.com
-                    dateOfBirth: '1985-10-02'
-                    emailVerified: false
-                    createDate: '2019-08-24'
-        '404':
-          description: User Not Found
-        '409':
-          description: Email Already Taken
-      description: Update the information of an existing user.
+          $ref: '#/components/responses/AddResponse'
+        '400':
+          description: Bad Request
       requestBody:
         content:
           application/json:
             schema:
               type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                  description: 'If a new email is given, the user''s email verified property will be set to false.'
-                dateOfBirth:
-                  type: string
-            examples:
-              Update First Name:
-                value:
-                  firstName: Rebecca
-              Update Email:
-                value:
-                  email: rebecca@gmail.com
-              Update Last Name & Date of Birth:
-                value:
-                  lastName: Baker
-                  dateOfBirth: '1985-10-02'
-        description: Patch user properties to update.
-  /user:
+              properties: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+          text/html:
+            schema:
+              type: object
+              properties: {}
+          text/plain:
+            schema:
+              type: object
+              properties: {}
+        description: ''
+      description: ''
+  /transactions/add/googlepay:
     post:
-      summary: Create New User
-      operationId: post-user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                dateOfBirth:
-                  type: string
-                  format: date
-              required:
-                - firstName
-                - lastName
-                - email
-                - dateOfBirth
-            examples:
-              Create User Bob Fellow:
-                value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
-        description: Post the necessary fields for the API to create a new user.
-      description: Create a new user.
+      summary: ''
+      operationId: AddFundsGooglePay
       responses:
         '200':
           description: OK
-  /items:
+    parameters: []
+  /transactions/add/person:
+    post:
+      summary: ''
+      operationId: AddFundsPerson
+      responses:
+        '200':
+          description: OK
+  /transactions/add/applepay:
+    post:
+      summary: ''
+      operationId: AddFundsApplePay
+      responses:
+        '200':
+          description: OK
+    parameters: []
+  /transactions/add/e-transfer:
+    post:
+      summary: ''
+      operationId: AddFundsE-transfer
+      responses:
+        '200':
+          description: OK
+  /transactions/add/bank:
+    post:
+      summary: ''
+      operationId: AddFundsBank
+      responses:
+        '200':
+          description: OK
+  '/account/:id':
     get:
-      summary: getItems
-      tags: []
-      operationId: get-items
+      summary: ''
+      operationId: GetAccountInformation
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: ''
+      operationId: 'post-account-:id'
+      responses:
+        '200':
+          description: OK
+  '/transactions/send/:id':
+    post:
+      summary: ''
+      operationId: SendFundsPerson
+      responses:
+        '200':
+          description: OK
+  /transactions/send/country:
+    post:
+      summary: ''
+      operationId: SendFundsCountry
+      responses:
+        '200':
+          description: OK
+  /transactions/send/e-tranfer:
+    post:
+      summary: ''
+      operationId: SendFundsE-transfer
+      responses:
+        '200':
+          description: OK
+  /transactions/send/top-up:
+    post:
+      summary: ''
+      operationId: SendTop-up
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     User:
@@ -179,12 +169,40 @@ components:
         - lastName
         - email
         - emailVerified
+    ErrorBody:
+      title: ErrorBody
+      type: object
+      properties:
+        type:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        '':
+          type: string
+    AddResponseBody:
+      title: AddResponse
+      type: object
+      properties:
+        Amount added:
+          type: number
+        Current amount:
+          type: number
+    SendResponseBody:
+      title: SendResponse
+      type: object
+      properties:
+        Amount sent:
+          type: number
+        Amount subtracted:
+          type: number
+        Amount left:
+          type: number
   responses:
-    BadRequest:
-      description: Example response
+    AddResponse:
+      description: Example response when send money
       content:
         application/json:
           schema:
-            properties:
-              id:
-                type: string
+            $ref: '#/components/schemas/AddResponseBody'

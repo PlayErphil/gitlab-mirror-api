@@ -12450,7 +12450,6 @@
         ]
       },
       "Error": {
-        "type": "object",
         "allOf": [
           {
             "$ref": "#/components/schemas/Problem"
@@ -12465,8 +12464,19 @@
           }
         ],
         "title": "",
-        "x-examples": {},
-        "x-internal": false
+        "x-examples": {
+          "example-1": {
+            "value": {
+              "type": "http://example.com",
+              "status": 400,
+              "title": "string",
+              "detail": "string",
+              "error": "string"
+            }
+          }
+        },
+        "x-internal": false,
+        "type": "object"
       },
       "ValidationErrorExtensions": {
         "type": "object",
