@@ -73,6 +73,8 @@ paths:
       description: The following endpoint describes how to add funds to your wallet with a credit card.
       security:
         - SecretApiKey: []
+      tags:
+        - buy
     parameters: []
   /transactions/buy/googlepay:
     post:
@@ -81,6 +83,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - buy
     parameters: []
   /transactions/buy/person:
     post:
@@ -89,6 +93,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - buy
     parameters: []
   /transactions/buy/applepay:
     post:
@@ -107,6 +113,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - buy
     parameters: []
   /transactions/buy/bank:
     post:
@@ -115,6 +123,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - buy
     parameters: []
   '/account/:id':
     get:
@@ -157,13 +167,9 @@ paths:
       description: This endpoint describes how to get the info of a topup
       security:
         - SecretApiKey: []
-  /transactions/add:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: GetTransactions
-      description: Return all type of transactions
+      tags:
+        - send
+  /transactions/add: {}
   /transactions/send/email:
     post:
       summary: Email Money Transfer
@@ -197,6 +203,8 @@ paths:
         description: ''
       security:
         - SecretApiKey: []
+      tags:
+        - send
     parameters: []
   /transactions/send/person:
     post:
@@ -306,6 +314,8 @@ paths:
       parameters: []
       security:
         - SecretApiKey: []
+      tags:
+        - send
     parameters: []
   /transactions/send/creditcard:
     post:
@@ -367,6 +377,8 @@ paths:
       parameters: []
       security:
         - SecretApiKey: []
+      tags:
+        - send
   /transactions/exchange:
     post:
       summary: Exchange Currency
@@ -410,6 +422,8 @@ paths:
                 - fromCurrency
                 - toCurrency
                 - amount
+      tags:
+        - send
 components:
   schemas:
     User:
