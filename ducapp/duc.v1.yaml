@@ -220,8 +220,14 @@ paths:
                   $ref: '#/components/schemas/DeliveryCurrency'
                 Delivery Country:
                   type: string
-                '':
-                  type: string
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          application/xhtml+xml:
+            schema:
+              type: object
+              properties: {}
       parameters: []
       security:
         - SecretApiKey: []
