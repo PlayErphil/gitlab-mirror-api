@@ -157,6 +157,8 @@ paths:
                   type: string
       security:
         - SecretApiKey: []
+      tags:
+        - send
     parameters: []
     get:
       summary: Get Top-up Transfer Info
