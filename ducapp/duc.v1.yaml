@@ -4,7 +4,7 @@ info:
   version: '1.0'
   description: |
     # Introduction
-    Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.
+    Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you belo
   termsOfService: 'https://ducapp.com/statics/en/terms_conditions'
   contact:
     email: support@ducapp.com
@@ -217,7 +217,7 @@ paths:
           $ref: '#/components/responses/SendResponse'
         '400':
           description: Bad Request
-      description: Send funds to a person/bussiness account within the DUC App enviroment. Your funds will be received in his DUC App wallet
+      description: Send funds to a person/bussiness account within the DUC App enviroment. Your funds will be received in his DUC App wallet.
       security:
         - SecretApiKey: []
       requestBody:
