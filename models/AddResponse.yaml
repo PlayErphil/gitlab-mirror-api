@@ -1,7 +1,0 @@
-title: AddResponse
-type: object
-properties:
-  Amount added:
-    type: number
-  Current Amount:
-    type: number

@@ -17,8 +17,8 @@ servers:
 paths:
   /transactions/buy/card:
     post:
-      summary: ''
-      operationId: AddFundsCard
+      summary: Buy Funds with Card
+      operationId: BuyFundsCard
       responses:
         '200':
           $ref: '#/components/responses/AddResponse'
@@ -29,7 +29,21 @@ paths:
           application/json:
             schema:
               type: object
-              properties: {}
+              properties:
+                amount:
+                  $ref: '#/components/schemas/Amount'
+                currency:
+                  $ref: '#/components/schemas/Currency'
+                concept:
+                  $ref: '#/components/schemas/Concept'
+                creditCardID:
+                  $ref: '#/components/schemas/CardHolderName'
+                cardNumber:
+                  $ref: '#/components/schemas/CardNumber'
+                cvc:
+                  $ref: ''
+                '':
+                  type: string
           application/xml:
             schema:
               type: object
@@ -55,7 +69,9 @@ paths:
               type: object
               properties: {}
         description: ''
-      description: ''
+      description: The following endpoint describes how to add funds to your wallet with a credit card.
+      security:
+        - SecretApiKey: []
     parameters: []
   /transactions/buy/googlepay:
     post:
@@ -110,73 +126,34 @@ paths:
       responses:
         '200':
           description: OK
-  /transactions/send/email:
+  /transactions/send/topup:
     post:
       summary: ''
-      operationId: SendFundsEmail
+      operationId: SendTopUp
       responses:
         '200':
           description: OK
-        '400':
-          description: Bad Request
-      description: Operation to send money through email money transfer
+      description: ''
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                amount:
-                  type: number
-                  description: Amount that the user wants to send
-                currency:
-                  type: number
-                  description: 'Currency of the transaction '
-                concept:
+                '':
                   type: string
-                email:
-                  type: string
-                  description: Email where you want to send the money
-                walletAddress:
-                  type: string
-              required:
-                - amount
-                - currency
-                - email
-        description: ''
+      security:
+        - SecretApiKey: []
     parameters: []
-  '/transactions/send/:id':
-    post:
-      summary: ''
-      operationId: SendFundsPerson
+    get:
+      summary: Get Top-up Transfer Info
+      operationId: GetTopUpInfo
       responses:
         '200':
           description: OK
-  /transactions/send/delivery:
-    post:
-      summary: ''
-      operationId: SendFundsCountry
-      responses:
-        '200':
-          description: OK
-      description: Send money to a country
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
-        description: ''
-      parameters: []
-    parameters: []
-  /transactions/send/topup:
-    post:
-      summary: ''
-      operationId: SendTop-up
-      responses:
-        '200':
-          description: OK
-    parameters: []
+      description: This endpoint describes how to get the info of a topup
+      security:
+        - SecretApiKey: []
   /transactions/add:
     get:
       summary: Your GET endpoint
@@ -184,13 +161,156 @@ paths:
       responses: {}
       operationId: GetTransactions
       description: Return all type of transactions
+  /transactions/send/email:
+    post:
+      summary: Email Money Transfer
+      operationId: SendFundsEmail
+      responses:
+        '201':
+          $ref: '#/components/responses/SendResponse'
+        '400':
+          description: Bad Request
+      description: Operation to send money through email money transfer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  $ref: '#/components/schemas/Amount'
+                currency:
+                  $ref: '#/components/schemas/Currency'
+                concept:
+                  $ref: '#/components/schemas/Concept'
+                email:
+                  $ref: '#/components/schemas/EmailToSend'
+                walletAddress:
+                  $ref: '#/components/schemas/WalletAddress'
+              required:
+                - amount
+                - currency
+                - email
+        description: ''
+      security:
+        - SecretApiKey: []
+    parameters: []
+  /transactions/send/person:
+    post:
+      summary: P2P Transfer
+      operationId: SendFundsPerson
+      responses:
+        '201':
+          $ref: '#/components/responses/SendResponse'
+        '400':
+          description: Bad Request
+      description: Send funds to a person/bussiness account within the DUC App enviroment. Your funds will be received in his DUC App wallet
+      security:
+        - SecretApiKey: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                toAddress:
+                  $ref: '#/components/schemas/ToAddress'
+                amount:
+                  $ref: '#/components/schemas/Amount'
+                currency:
+                  $ref: '#/components/schemas/Currency'
+                concept:
+                  $ref: '#/components/schemas/Concept'
+                walletAddress:
+                  $ref: '#/components/schemas/WalletAddress'
+              required:
+                - toAddress
+                - amount
+                - currency
+    parameters: []
+  /transactions/send/delivery:
+    post:
+      summary: Home Delivery
+      operationId: SendFundsCountry
+      responses:
+        '201':
+          $ref: '#/components/responses/SendResponse'
+        '400':
+          description: Bad Request
+      description: 'This endpoint describes how to send money to a home, place or person in cash.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  $ref: '#/components/schemas/Amount'
+                currency:
+                  $ref: '#/components/schemas/Currency'
+                concept:
+                  $ref: '#/components/schemas/Concept'
+                deliveryAddress:
+                  $ref: '#/components/schemas/DeliveryAddress'
+                deliveryContact:
+                  $ref: '#/components/schemas/ContactPhone'
+                deliveryID:
+                  $ref: '#/components/schemas/DeliveryIdentity'
+                deliveryPhone:
+                  $ref: '#/components/schemas/DeliveryPhone'
+                deliveryCountry:
+                  $ref: '#/components/schemas/DeliveryCountry'
+                deliveryArea:
+                  $ref: '#/components/schemas/DeliveryArea'
+                deliveryCurrency:
+                  $ref: '#/components/schemas/DeliveryCurrency'
+                deliveryAmount:
+                  $ref: '#/components/schemas/DeliveryAmount'
+                deliveryCountryCode:
+                  $ref: '#/components/schemas/DeliveryCountryCode'
+                deliveryZone:
+                  $ref: '#/components/schemas/DeliveryZone'
+                deliveryCity:
+                  $ref: '#/components/schemas/DeliveryCity'
+                walletAddress:
+                  $ref: '#/components/schemas/WalletAddress'
+                deliveryLastName:
+                  $ref: '#/components/schemas/DeliveryLastName'
+                deliverySecondLastName:
+                  $ref: '#/components/schemas/DeliverySecondLastName'
+                service:
+                  $ref: '#/components/schemas/Service'
+              required:
+                - amount
+                - currency
+                - deliveryAddress
+                - deliveryContact
+                - deliveryID
+                - deliveryPhone
+                - deliveryCountry
+                - deliveryArea
+                - deliveryCurrency
+                - deliveryAmount
+                - deliveryCountryCode
+                - deliveryZone
+                - deliveryCity
+                - deliveryLastName
+                - deliverySecondLastName
+                - service
+        description: ''
+      parameters: []
+      security:
+        - SecretApiKey: []
+    parameters: []
   /transactions/send/creditcard:
     post:
-      summary: ''
+      summary: Cash Out to Credit Card
       operationId: SendFundsCreditCard
       responses:
-        '200':
-          description: OK
+        '201':
+          $ref: '#/components/responses/SendResponse'
+        '400':
+          description: Bad Request
       description: This endpoint describes how to send money to a credit or debit card.
       requestBody:
         content:
@@ -198,33 +318,93 @@ paths:
             schema:
               type: object
               properties:
-                Service:
+                service:
                   $ref: '#/components/schemas/Service'
-                Amount:
+                amount:
                   $ref: '#/components/schemas/Amount'
-                Currency:
+                currency:
                   $ref: '#/components/schemas/Currency'
-                Concept:
+                concept:
                   $ref: '#/components/schemas/Concept'
-                Card Number:
+                cardNumber:
                   $ref: '#/components/schemas/CardNumber'
-                Card Holder Name:
+                cardHolderName:
                   $ref: '#/components/schemas/CardHolderName'
-                Verify Card Number:
+                verifyCardNumber:
                   $ref: '#/components/schemas/CardNumber'
-                Bank Name:
+                bankName:
                   $ref: '#/components/schemas/BankName'
-                Contact Phone:
+                contactPhone:
                   $ref: '#/components/schemas/ContactPhone'
-                Delivery Currency:
+                deliveryCurrency:
                   $ref: '#/components/schemas/DeliveryCurrency'
-                Delivery Country:
-                  type: string
-                '':
-                  type: string
+                deliveryCountry:
+                  $ref: '#/components/schemas/DeliveryCountry'
+                deliveryAmount:
+                  $ref: '#/components/schemas/DeliveryAmount'
+                deliveryCountryCode:
+                  $ref: '#/components/schemas/DeliveryCountryCode'
+                walletAddress:
+                  $ref: '#/components/schemas/WalletAddress'
+              required:
+                - service
+                - amount
+                - currency
+                - cardNumber
+                - cardHolderName
+                - verifyCardNumber
+                - bankName
+                - contactPhone
+                - deliveryCurrency
+                - deliveryCountry
+                - deliveryAmount
+                - deliveryCountryCode
       parameters: []
       security:
         - SecretApiKey: []
+  /transactions/exchange:
+    post:
+      summary: Exchange Currency
+      operationId: transactionsExchange
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fromCurrencyLeft:
+                    type: number
+                  toCurrencyCurrent:
+                    type: number
+                  toCurrencyAdded:
+                    type: number
+                  fromCurrencySubtracted:
+                    type: number
+        '400':
+          description: Bad Request
+      description: You may want to exchange your funds between currencies to perform operations. This endpoint describes how.
+      security:
+        - SecretApiKey: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fromCurrency:
+                  $ref: '#/components/schemas/FromCurrency'
+                toCurrency:
+                  $ref: '#/components/schemas/ToCurrency'
+                amount:
+                  $ref: '#/components/schemas/Amount'
+                walletAddress:
+                  $ref: '#/components/schemas/WalletAddress'
+              required:
+                - fromCurrency
+                - toCurrency
+                - amount
 components:
   schemas:
     User:
@@ -366,10 +546,7 @@ components:
       description: Second last name of the person that will receive the money
     EmailToSend:
       title: EmailToSend
-      type: object
-      properties:
-        id:
-          type: string
+      type: string
       description: Email of the person/business that will receive the money
     FromCurrency:
       title: FromCurrency
@@ -387,20 +564,49 @@ components:
       title: ToAddress
       type: number
       description: 'Wallet address of the person/business you want to send the money to. Note that the address is not an email, is a the address of the DUC wallet'
+    cvc:
+      title: CVC
+      type: integer
+      description: Three digits on the back of your card
+    ExpirationDate:
+      title: ExpirationDate
+      type: object
+      description: Date of expiration of your credit/debit card.
+      properties:
+        month:
+          type: integer
+          description: Use two digits format E.g. 04
+        year:
+          type: integer
+          description: Use two digits format E.g. 25
+      required:
+        - month
+        - year
+    CardStreetName:
+      title: CardStreetName
+      type: string
+      description: Street Name where your card is registered.
+    ZipCode:
+      title: CardZipCode
+      type: number
+      description: ZipCode of the direction of your card.
   responses:
     AddResponse:
-      description: Example response when send money
+      description: Response of a successful transactions-buy operation.
       content:
         application/json:
           schema:
             type: object
             properties:
-              Amount added:
+              amountAdded:
                 type: number
-              Current amount:
+                description: Amount Added to the wallet.
+              currentAmount:
                 type: number
+                description: Current Amount in the wallet.
+      headers: {}
     SendResponse:
-      description: Example response
+      description: Response of a successful transactions-send operation.
       content:
         application/json:
           schema:
@@ -408,10 +614,13 @@ components:
             properties:
               Amount sent:
                 type: number
+                description: Amount sent.
               Amount subtracted:
                 type: number
+                description: Amount used in the transaction.
               Amount left:
                 type: number
+                description: Current amount in your wallet.
   securitySchemes:
     HTTP:
       type: http
