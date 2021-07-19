@@ -97,6 +97,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - buy
     parameters: []
   /transactions/buy/email:
     post:
@@ -228,6 +230,8 @@ paths:
                 - toAddress
                 - amount
                 - currency
+      tags:
+        - send
     parameters: []
   /transactions/send/delivery:
     post:
