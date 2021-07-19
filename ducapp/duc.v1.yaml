@@ -74,7 +74,8 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - buy
+        - Buy
+        - Not done
     parameters: []
   /transactions/buy/googlepay:
     post:
@@ -84,7 +85,8 @@ paths:
         '200':
           description: OK
       tags:
-        - buy
+        - Buy
+        - Not done
     parameters: []
   /transactions/buy/person:
     post:
@@ -94,7 +96,8 @@ paths:
         '200':
           description: OK
       tags:
-        - buy
+        - Not done
+        - Buy
     parameters: []
   /transactions/buy/applepay:
     post:
@@ -104,7 +107,8 @@ paths:
         '200':
           description: OK
       tags:
-        - buy
+        - Buy
+        - Not done
     parameters: []
   /transactions/buy/email:
     post:
@@ -114,7 +118,8 @@ paths:
         '200':
           description: OK
       tags:
-        - buy
+        - Buy
+        - Not done
     parameters: []
   /transactions/buy/bank:
     post:
@@ -124,7 +129,8 @@ paths:
         '200':
           description: OK
       tags:
-        - buy
+        - Buy
+        - Not done
     parameters: []
   '/account/:id':
     get:
@@ -133,6 +139,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - Not done
     post:
       summary: ''
       operationId: 'post-account-:id'
@@ -170,8 +178,8 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - send
-  /transactions/add: {}
+        - Send
+        - Not done
   /transactions/send/email:
     post:
       summary: Email Money Transfer
@@ -206,7 +214,8 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - send
+        - Send
+        - Not done
     parameters: []
   /transactions/send/p2p:
     post:
@@ -241,7 +250,7 @@ paths:
                 - amount
                 - currency
       tags:
-        - send
+        - Send
     parameters: []
   /transactions/send/delivery:
     post:
@@ -317,7 +326,7 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - send
+        - Send
     parameters: []
   /transactions/send/creditcard:
     post:
@@ -380,7 +389,7 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - send
+        - Send
   /transactions/exchange:
     post:
       summary: Exchange Currency
@@ -425,7 +434,7 @@ paths:
                 - toCurrency
                 - amount
       tags:
-        - send
+        - Send
 components:
   schemas:
     User:
@@ -654,5 +663,6 @@ security:
   - SecretApiKey: []
   - API Key - 1: []
 tags:
-  - name: buy
-  - name: send
+  - name: Buy
+  - name: Not done
+  - name: Send
