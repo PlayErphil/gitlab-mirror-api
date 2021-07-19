@@ -217,7 +217,7 @@ paths:
           $ref: '#/components/responses/SendResponse'
         '400':
           description: Bad Request
-      description: Send funds to a person/bussiness account within the DUC App enviroment. Your funds will be received in his DUC App wallet.
+      description: Send funds to a person/bussiness account within the DUC App enviroment. Your funds will be received in his DUC App wallet
       security:
         - SecretApiKey: []
       requestBody:
