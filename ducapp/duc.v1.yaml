@@ -11,9 +11,10 @@ info:
     name: DUC App Support
   license:
     name: © Copyright 2021 D.U.C. App Corporation. All rights reserved.
-    identifier: 0BSD
+    url: 'http://api.ducapp.com'
 servers:
-  - {}
+  - url: 'http://api.ducapp.com'
+    description: Website
 paths:
   /transactions/buy/card:
     post:
