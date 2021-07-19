@@ -633,3 +633,7 @@ components:
 security:
   - SecretApiKey: []
   - API Key - 1: []
+tags:
+  - name: aa
+  - name: aaa
+  - name: aaaaa
