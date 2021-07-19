@@ -20,8 +20,8 @@ paths:
       summary: Buy Funds with Card
       operationId: BuyFundsCard
       responses:
-        '200':
-          $ref: '#/components/responses/AddResponse'
+        '201':
+          $ref: '#/components/responses/BuyResponse'
         '400':
           description: Bad Request
       requestBody:
@@ -591,7 +591,7 @@ components:
       type: number
       description: ZipCode of the direction of your card.
   responses:
-    AddResponse:
+    BuyResponse:
       description: Response of a successful transactions-buy operation.
       content:
         application/json:
