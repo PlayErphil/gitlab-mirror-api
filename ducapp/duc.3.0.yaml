@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   title: DUC App Developer
   version: '1.0'
@@ -407,58 +407,6 @@ paths:
                 - amount
 components:
   schemas:
-    User:
-      title: DeliveryCity
-      type: object
-      description: deliveryCity
-      examples:
-        - id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          signUpDate: '2019-08-24'
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the given user.
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-          format: email
-        dateOfBirth:
-          type: string
-          format: date
-          example: '1997-10-31'
-        emailVerified:
-          type: boolean
-          description: Set to true if the user's email has been verified.
-        createDate:
-          type: string
-          format: date
-          description: The date that the user was created.
-      required:
-        - id
-        - firstName
-        - lastName
-        - email
-        - emailVerified
-    ErrorBody:
-      title: ErrorBody
-      type: object
-      properties:
-        type:
-          type: string
-        status:
-          type: integer
-        detail:
-          type: string
-        '':
-          type: string
     Service:
       title: Service
       type: string
