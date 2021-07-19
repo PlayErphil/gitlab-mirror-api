@@ -146,7 +146,7 @@ paths:
       responses:
         '200':
           description: OK
-      description: ''
+      description: aaaaaaa
       requestBody:
         content:
           application/json:
