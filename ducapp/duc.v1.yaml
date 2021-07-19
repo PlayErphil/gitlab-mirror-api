@@ -634,6 +634,5 @@ security:
   - SecretApiKey: []
   - API Key - 1: []
 tags:
-  - name: aa
-  - name: aaa
-  - name: aaaaa
+  - name: buy
+  - name: send
