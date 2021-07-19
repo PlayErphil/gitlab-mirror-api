@@ -1,4 +1,4 @@
-openapi: 3.1.0
+swagger: 3.1.0
 info:
   title: DUC App Developer
   version: '1.0'
