@@ -2,21 +2,20 @@ openapi: 3.1.0
 info:
   title: DUC App Developer
   version: '1.0'
-  description: |-
+  description: |
     # Introduction
     Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.
-
-    # Errors
   termsOfService: 'https://ducapp.com/statics/en/terms_conditions'
   contact:
     email: support@ducapp.com
     name: DUC App Support
   license:
     name: © Copyright 2021 D.U.C. App Corporation. All rights reserved.
+    identifier: 0BSD
 servers:
   - {}
 paths:
-  /transactions/add/card:
+  /transactions/buy/card:
     post:
       summary: ''
       operationId: AddFundsCard
@@ -47,9 +46,18 @@ paths:
             schema:
               type: object
               properties: {}
+          application/EDI-X12:
+            schema:
+              type: object
+              properties: {}
+          application/EDIFACT:
+            schema:
+              type: object
+              properties: {}
         description: ''
       description: ''
-  /transactions/add/googlepay:
+    parameters: []
+  /transactions/buy/googlepay:
     post:
       summary: ''
       operationId: AddFundsGooglePay
@@ -57,14 +65,15 @@ paths:
         '200':
           description: OK
     parameters: []
-  /transactions/add/person:
+  /transactions/buy/person:
     post:
       summary: ''
       operationId: AddFundsPerson
       responses:
         '200':
           description: OK
-  /transactions/add/applepay:
+    parameters: []
+  /transactions/buy/applepay:
     post:
       summary: ''
       operationId: AddFundsApplePay
@@ -72,20 +81,22 @@ paths:
         '200':
           description: OK
     parameters: []
-  /transactions/add/e-transfer:
+  /transactions/buy/email:
     post:
       summary: ''
       operationId: AddFundsE-transfer
       responses:
         '200':
           description: OK
-  /transactions/add/bank:
+    parameters: []
+  /transactions/buy/bank:
     post:
       summary: ''
       operationId: AddFundsBank
       responses:
         '200':
           description: OK
+    parameters: []
   '/account/:id':
     get:
       summary: ''
@@ -99,6 +110,41 @@ paths:
       responses:
         '200':
           description: OK
+  /transactions/send/email:
+    post:
+      summary: ''
+      operationId: SendFundsEmail
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      description: Operation to send money through email money transfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: Amount that the user wants to send
+                currency:
+                  type: number
+                  description: 'Currency of the transaction '
+                concept:
+                  type: string
+                email:
+                  type: string
+                  description: Email where you want to send the money
+                walletAddress:
+                  type: string
+              required:
+                - amount
+                - currency
+                - email
+        description: ''
+    parameters: []
   '/transactions/send/:id':
     post:
       summary: ''
@@ -106,33 +152,85 @@ paths:
       responses:
         '200':
           description: OK
-  /transactions/send/country:
+  /transactions/send/delivery:
     post:
       summary: ''
       operationId: SendFundsCountry
       responses:
         '200':
           description: OK
-  /transactions/send/e-tranfer:
-    post:
-      summary: ''
-      operationId: SendFundsE-transfer
-      responses:
-        '200':
-          description: OK
-  /transactions/send/top-up:
+      description: Send money to a country
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+        description: ''
+      parameters: []
+    parameters: []
+  /transactions/send/topup:
     post:
       summary: ''
       operationId: SendTop-up
       responses:
         '200':
           description: OK
+    parameters: []
+  /transactions/add:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: GetTransactions
+      description: Return all type of transactions
+  /transactions/send/creditcard:
+    post:
+      summary: ''
+      operationId: SendFundsCreditCard
+      responses:
+        '200':
+          description: OK
+      description: This endpoint describes how to send money to a credit or debit card.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Service:
+                  $ref: '#/components/schemas/Service'
+                Amount:
+                  $ref: '#/components/schemas/Amount'
+                Currency:
+                  $ref: '#/components/schemas/Currency'
+                Concept:
+                  $ref: '#/components/schemas/Concept'
+                Card Number:
+                  $ref: '#/components/schemas/CardNumber'
+                Card Holder Name:
+                  $ref: '#/components/schemas/CardHolderName'
+                Verify Card Number:
+                  $ref: '#/components/schemas/CardNumber'
+                Bank Name:
+                  $ref: '#/components/schemas/BankName'
+                Contact Phone:
+                  $ref: '#/components/schemas/ContactPhone'
+                Delivery Currency:
+                  $ref: '#/components/schemas/DeliveryCurrency'
+                Delivery Country:
+                  type: string
+                '':
+                  type: string
+      parameters: []
+      security:
+        - SecretApiKey: []
 components:
   schemas:
     User:
-      title: User
+      title: DeliveryCity
       type: object
-      description: ''
+      description: deliveryCity
       examples:
         - id: 142
           firstName: Alice
@@ -181,28 +279,147 @@ components:
           type: string
         '':
           type: string
-    AddResponseBody:
-      title: AddResponse
+    Service:
+      title: Service
+      type: string
+      description: ''
+    Amount:
+      title: Amount
+      type: number
+      description: Amount that you want to use in the transaction
+    Currency:
+      title: Currency
+      type: string
+      description: Currency that you want to use to perfom transaction.
+    Concept:
+      allOf: []
+    BankName:
+      title: BankName
+      type: string
+      description: Name of the bank of your credit/debit card
+    CardNumber:
+      title: CardNumber
+      type: integer
+      description: Number of your credit/debit card
+    CardHolderName:
+      title: CardHolderName
+      type: string
+      description: Name of the card holder.
+    ContactPhone:
+      title: ContactPhone
+      type: number
+      description: Contact of the person who is going to recieve the money.
+    DeliveryCountry:
+      title: DeliveryCountry
+      type: string
+      description: Country where the money should be delivered
+    DeliveryCurrency:
+      title: DeliveryCurrency
+      type: number
+      description: Currency that you want to be used in the delivery.
+    DeliveryAmount:
+      title: DeliveryAmount
+      type: number
+      description: Amount that will be recieved.
+    DeliveryCountryCode:
+      title: DeliveryCountryCode
+      type: number
+      description: Code of the country of delivery.
+    WalletAddress:
+      title: WalletAddress
+      type: number
+      description: Wallet Address of the user that is perfoming the transaction. This is not required and if not filled your wallet address wil be used automatically.
+    DeliveryAddress:
+      title: DeliveryAddress
+      type: string
+      description: Address where you want the money to be delivered.
+    DeliveryIdentity:
+      title: DeliveryIdentity
+      type: integer
+      description: 'Number of any Identity card of the receiver. '
+    DeliveryPhone:
+      title: DeliveryPhone
       type: object
       properties:
-        Amount added:
-          type: number
-        Current amount:
-          type: number
-    SendResponseBody:
-      title: SendResponse
+        id:
+          type: string
+      description: The contact number of the person that is receiving the delivery.
+    DeliveryArea:
+      title: DeliveryArea
+      type: string
+      description: Area where the money will be delivered
+    DeliveryZone:
+      title: DeliveryZone
+      type: string
+      description: Zone where the money will be delivered
+    DeliveryCity:
+      title: DeliveryCity
+      type: string
+      description: City where the money will be delivered
+    DeliveryLastName:
+      title: DeliveryLastName
+      type: string
+      description: Last Name of the person that will recieve the money
+    DeliverySecondLastName:
+      title: DeliverySecondLastName
+      type: string
+      description: Second last name of the person that will receive the money
+    EmailToSend:
+      title: EmailToSend
       type: object
       properties:
-        Amount sent:
-          type: number
-        Amount subtracted:
-          type: number
-        Amount left:
-          type: number
+        id:
+          type: string
+      description: Email of the person/business that will receive the money
+    FromCurrency:
+      title: FromCurrency
+      type: string
+      description: Currency you want to convert from.
+    ToCurrency:
+      title: ToCurrency
+      type: string
+      description: Currency you want to convert to.
+    BuyAmount:
+      title: BuyAmount
+      type: number
+      description: 'This is totally not necessary. What is the point of having this here? You already have the amount, why buy amount again?'
+    ToAddress:
+      title: ToAddress
+      type: number
+      description: 'Wallet address of the person/business you want to send the money to. Note that the address is not an email, is a the address of the DUC wallet'
   responses:
     AddResponse:
       description: Example response when send money
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AddResponseBody'
+            type: object
+            properties:
+              Amount added:
+                type: number
+              Current amount:
+                type: number
+    SendResponse:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              Amount sent:
+                type: number
+              Amount subtracted:
+                type: number
+              Amount left:
+                type: number
+  securitySchemes:
+    HTTP:
+      type: http
+      scheme: basic
+    SecretApiKey:
+      name: DUC-APIKEY
+      type: apiKey
+      in: header
+security:
+  - SecretApiKey: []
+  - API Key - 1: []
