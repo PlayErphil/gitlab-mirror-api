@@ -74,7 +74,6 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - Buy
         - Not done
     parameters: []
   /transactions/buy/googlepay:
@@ -85,7 +84,6 @@ paths:
         '200':
           description: OK
       tags:
-        - Buy
         - Not done
     parameters: []
   /transactions/buy/person:
@@ -97,7 +95,6 @@ paths:
           description: OK
       tags:
         - Not done
-        - Buy
     parameters: []
   /transactions/buy/applepay:
     post:
@@ -107,7 +104,6 @@ paths:
         '200':
           description: OK
       tags:
-        - Buy
         - Not done
     parameters: []
   /transactions/buy/email:
@@ -118,7 +114,6 @@ paths:
         '200':
           description: OK
       tags:
-        - Buy
         - Not done
     parameters: []
   /transactions/buy/bank:
@@ -129,7 +124,6 @@ paths:
         '200':
           description: OK
       tags:
-        - Buy
         - Not done
     parameters: []
   '/account/:id':
@@ -178,7 +172,6 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - Send
         - Not done
   /transactions/send/email:
     post:
@@ -214,7 +207,6 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - Send
         - Not done
     parameters: []
   /transactions/send/p2p:
