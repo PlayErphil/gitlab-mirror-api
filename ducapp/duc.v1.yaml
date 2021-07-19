@@ -208,7 +208,7 @@ paths:
       tags:
         - send
     parameters: []
-  /transactions/send/person:
+  /transactions/send/p2p:
     post:
       summary: P2P Transfer
       operationId: SendFundsPerson
