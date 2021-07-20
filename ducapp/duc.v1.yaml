@@ -280,7 +280,7 @@ paths:
           $ref: '#/components/responses/SendResponse'
         '400':
           description: Bad Request
-      description: 'This endpoint describes how to send money to a home, place or person in cash.'
+      description: Send money to a home.
       requestBody:
         content:
           application/json:
