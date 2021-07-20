@@ -515,21 +515,21 @@ components:
     Amount:
       title: Amount
       type: number
-      description: Amount that you want to use in the transaction
+      description: Amount of money you want to use in the transaction.
     Currency:
       title: Currency
       type: string
-      description: Currency that you want to use to perfom transaction.
+      description: Currency you want to use for the transaction.
     Concept:
       allOf: []
     BankName:
       title: BankName
       type: string
-      description: Name of the bank of your credit/debit card
+      description: Name of the bank of your credit/debit card.
     CardNumber:
       title: CardNumber
       type: integer
-      description: Number of your credit/debit card
+      description: Number of your credit/debit card.
     CardHolderName:
       title: CardHolderName
       type: string
@@ -537,15 +537,15 @@ components:
     ContactPhone:
       title: ContactPhone
       type: number
-      description: Phone number of the person who is going to recieve the money.
+      description: Phone number of the person that is going to recieve the money.
     DeliveryCountry:
       title: DeliveryCountry
       type: string
-      description: Country where the money should be delivered
+      description: Country where the money should be delivered.
     DeliveryCurrency:
       title: DeliveryCurrency
-      type: number
-      description: Currency that you want to be used in the delivery.
+      description: Currency in which you want the money to be delivered.
+      type: string
     DeliveryAmount:
       title: DeliveryAmount
       type: number
@@ -553,11 +553,11 @@ components:
     DeliveryCountryCode:
       title: DeliveryCountryCode
       type: number
-      description: Code of the country of delivery.
+      description: Country code of delivery.
     WalletAddress:
       title: WalletAddress
       type: number
-      description: Wallet Address of the user that is perfoming the transaction. This is not required and if not filled your wallet address wil be used automatically.
+      description: 'Wallet address of the user who is making the transaction. This is not required and if not completed, your wallet address will be used automatically.'
     DeliveryAddress:
       title: DeliveryAddress
       type: string
@@ -568,35 +568,32 @@ components:
       description: 'Number of any Identity card of the receiver. '
     DeliveryPhone:
       title: DeliveryPhone
-      type: object
-      properties:
-        id:
-          type: string
       description: The contact number of the person that is receiving the delivery.
+      type: number
     DeliveryArea:
       title: DeliveryArea
       type: string
-      description: Area where the money will be delivered
+      description: Area where the money will be delivered.
     DeliveryZone:
       title: DeliveryZone
       type: string
-      description: Zone where the money will be delivered
+      description: Zone where the money will be delivered.
     DeliveryCity:
       title: DeliveryCity
       type: string
-      description: City where the money will be delivered
+      description: City where the money will be delivered.
     DeliveryLastName:
       title: DeliveryLastName
       type: string
-      description: Last Name of the person that will recieve the money
+      description: Last name of the person who will receive the money.
     DeliverySecondLastName:
       title: DeliverySecondLastName
       type: string
-      description: Second last name of the person that will receive the money
+      description: Second last name of the person who will receive the money.
     EmailToSend:
       title: EmailToSend
       type: string
-      description: Email of the person/business that will receive the money
+      description: Email of the person/business who will receive the money.
     FromCurrency:
       title: FromCurrency
       type: string
@@ -612,7 +609,7 @@ components:
     ToAddress:
       title: ToAddress
       type: number
-      description: 'Wallet address of the person/business you want to send the money to. Note that the address is not an email, is a the address of the DUC wallet'
+      description: 'Wallet address of the person/business you want to send the money to. Note that the address is not an email, is a the address of the DUC wallet.'
     cvc:
       title: CVC
       type: integer
@@ -638,7 +635,7 @@ components:
     ZipCode:
       title: CardZipCode
       type: number
-      description: ZipCode of the direction of your card.
+      description: Postal code of your card address.
     DeliveryName:
       title: DeliveryName
       description: First name of the person that will receive the money.
