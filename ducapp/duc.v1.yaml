@@ -170,18 +170,22 @@ paths:
     parameters: []
   /transactions/send/topup:
     post:
-      summary: ''
+      summary: Topup Transfer
       operationId: SendTopUp
       responses:
         '200':
           description: OK
-      description: ''
+      description: Send a mobile recharge to a phone.
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
+                destination:
+                  $ref: '#/components/schemas/TopUpDestination'
+                product:
+                  type: string
                 '':
                   type: string
       security:
@@ -193,13 +197,30 @@ paths:
       summary: Get Top-up Transfer Info
       operationId: GetTopUpInfo
       responses:
-        '200':
-          description: OK
-      description: Get the information about a top up transfer.
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  '':
+                    type: string
+      description: Get the information about a top up transfer to a specific country.
       security:
         - SecretApiKey: []
       tags:
         - Not done
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destination:
+                  $ref: '#/components/schemas/TopUpDestination'
+                currency:
+                  $ref: '#/components/schemas/Currency'
   /transactions/send/email:
     post:
       summary: Send funds using e-transfer
@@ -296,11 +317,11 @@ paths:
                 deliveryAddress:
                   $ref: '#/components/schemas/DeliveryAddress'
                 deliveryContact:
-                  $ref: '#/components/schemas/ContactPhone'
+                  $ref: '#/components/schemas/ReceiverPhone'
                 deliveryID:
                   $ref: '#/components/schemas/DeliveryIdentity'
                 deliveryPhone:
-                  $ref: '#/components/schemas/DeliveryPhone'
+                  $ref: '#/components/schemas/ReceiverPhone'
                 deliveryCountry:
                   $ref: '#/components/schemas/DeliveryCountry'
                 deliveryArea:
@@ -380,7 +401,7 @@ paths:
                 bankName:
                   $ref: '#/components/schemas/BankName'
                 contactPhone:
-                  $ref: '#/components/schemas/ContactPhone'
+                  $ref: '#/components/schemas/ReceiverPhone'
                 deliveryCurrency:
                   $ref: '#/components/schemas/DeliveryCurrency'
                 deliveryCountry:
@@ -534,10 +555,10 @@ components:
       title: CardHolderName
       type: string
       description: Name of the card holder.
-    ContactPhone:
+    ReceiverPhone:
       title: ContactPhone
       type: number
-      description: Phone number of the person that is going to recieve the money.
+      description: Phone number of the person who will receive the money.
     DeliveryCountry:
       title: DeliveryCountry
       type: string
@@ -566,10 +587,6 @@ components:
       title: DeliveryIdentityCard
       type: integer
       description: 'Number of any Identity card of the receiver. '
-    DeliveryPhone:
-      title: DeliveryPhone
-      description: The contact number of the person that is receiving the delivery.
-      type: number
     DeliveryArea:
       title: DeliveryArea
       type: string
@@ -610,7 +627,7 @@ components:
       title: ToAddress
       type: number
       description: 'Wallet address of the person/business you want to send the money to. Note that the address is not an email, is a the address of the DUC wallet.'
-    cvc:
+    CVC:
       title: CVC
       type: integer
       description: Three digits on the back of your card
@@ -632,14 +649,18 @@ components:
       title: CardStreetName
       type: string
       description: Street Name where your card is registered.
-    ZipCode:
-      title: CardZipCode
-      type: number
+    PostalCode:
+      title: PostalCodeCard
+      type: string
       description: Postal code of your card address.
     DeliveryName:
       title: DeliveryName
       description: First name of the person that will receive the money.
       type: string
+    TopUpDestination:
+      title: TopUpDestination
+      type: string
+      description: 'Destination of the mobile recharge. e.g. India, Cuba.'
   responses:
     BuyResponse:
       description: Response of a successful transactions-buy operation.
