@@ -251,6 +251,14 @@ paths:
                 - amount
                 - currency
                 - email
+            examples:
+              Example:
+                value:
+                  amount: 100
+                  currency: usd
+                  concept: null
+                  email: test@gmail.com
+                  walletAddress: 0
         description: ''
       security:
         - SecretApiKey: []
