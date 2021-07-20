@@ -238,7 +238,7 @@ paths:
     parameters: []
   /transactions/send/p2p:
     post:
-      summary: P2P Transfer
+      summary: P2P transfer
       operationId: SendFundsPerson
       responses:
         '201':
@@ -273,14 +273,14 @@ paths:
     parameters: []
   /transactions/send/delivery:
     post:
-      summary: Home Delivery
+      summary: Home delivery
       operationId: SendFundsCountry
       responses:
         '201':
           $ref: '#/components/responses/SendResponse'
         '400':
           description: Bad Request
-      description: Send money to a home.
+      description: Send cash to your home using our home delivery service.
       requestBody:
         content:
           application/json:
@@ -349,14 +349,14 @@ paths:
     parameters: []
   /transactions/send/creditcard:
     post:
-      summary: Cash Out to Credit Card
+      summary: Cashout to credit card
       operationId: SendFundsCreditCard
       responses:
         '201':
           $ref: '#/components/responses/SendResponse'
         '400':
           description: Bad Request
-      description: This endpoint describes how to send money to a credit or debit card.
+      description: Cashout funds to a credit card
       requestBody:
         content:
           application/json:
