@@ -259,6 +259,13 @@ paths:
                   concept: null
                   email: test@gmail.com
                   walletAddress: 0
+              example-2:
+                value:
+                  amount: 333333
+                  currency: qqqq
+                  concept: consept
+                  email: uwu@yahoo.net
+                  walletAddress: 14345125235215251000
         description: ''
       security:
         - SecretApiKey: []
