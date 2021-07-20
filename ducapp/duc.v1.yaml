@@ -2,9 +2,7 @@ openapi: 3.1.0
 info:
   title: DUC App Developer
   version: '1.0'
-  description: |
-    # Introduction
-    Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.
+  description: Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.
   termsOfService: 'https://ducapp.com/statics/en/terms_conditions'
   contact:
     email: support@ducapp.com
@@ -14,12 +12,11 @@ info:
     url: 'http://api.ducapp.com'
 servers:
   - url: 'http://api.ducapp.com'
-    description: Website
 paths:
-  /transactions/buy/card:
+  /transactions/add/card:
     post:
-      summary: Buy Funds with Card
-      operationId: BuyFundsCard
+      summary: Add funds with credit/debit card
+      operationId: AddFundsCard
       responses:
         '201':
           $ref: '#/components/responses/BuyResponse'
@@ -69,8 +66,16 @@ paths:
             schema:
               type: object
               properties: {}
+          application/atom+xml:
+            schema:
+              type: object
+              properties: {}
+          application/font-woff:
+            schema:
+              type: object
+              properties: {}
         description: ''
-      description: The following endpoint describes how to add funds to your wallet with a credit card.
+      description: Add funds to your wallet using a credit or debit card.
       security:
         - SecretApiKey: []
       tags:
@@ -78,45 +83,81 @@ paths:
     parameters: []
   /transactions/buy/googlepay:
     post:
-      summary: ''
+      summary: Add funds with google pay
       operationId: AddFundsGooglePay
       responses:
-        '200':
-          description: OK
+        '201':
+          $ref: '#/components/responses/BuyResponse'
       tags:
         - Not done
+      description: Add funds to your wallet using google pay.
+      security:
+        - SecretApiKey: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
     parameters: []
-  /transactions/buy/person:
+  /transactions/add/applepay:
     post:
-      summary: ''
-      operationId: AddFundsPerson
-      responses:
-        '200':
-          description: OK
-      tags:
-        - Not done
-    parameters: []
-  /transactions/buy/applepay:
-    post:
-      summary: ''
+      summary: Add funds with apple pay
       operationId: AddFundsApplePay
       responses:
-        '200':
-          description: OK
+        '201':
+          $ref: '#/components/responses/BuyResponse'
       tags:
         - Not done
+      description: Add funds to your wallet using google pay.
+      security:
+        - SecretApiKey: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
     parameters: []
-  /transactions/buy/email:
+  /transactions/add/p2p:
     post:
-      summary: ''
-      operationId: AddFundsE-transfer
+      summary: Add funds from a p2p transaction
+      operationId: AddFundsPerson
       responses:
-        '200':
-          description: OK
+        '201':
+          $ref: '#/components/responses/BuyResponse'
       tags:
         - Not done
+      description: Add funds to your wallet through a p2p transaction by asking another user to send funds from their wallet directly to you. Everything happens within the DUC environment.
+      security:
+        - SecretApiKey: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
     parameters: []
-  /transactions/buy/bank:
+  /transactions/add/email:
+    post:
+      summary: Add funds using email money transfer
+      operationId: AddFundsEmail
+      responses:
+        '201':
+          $ref: '#/components/responses/BuyResponse'
+      tags:
+        - Not done
+      security:
+        - SecretApiKey: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      description: Add funds to your wallet by sending an email money transfer to the DUC system.
+    parameters: []
+  /transactions/add/bank:
     post:
       summary: ''
       operationId: AddFundsBank
@@ -125,22 +166,8 @@ paths:
           description: OK
       tags:
         - Not done
+      description: ''
     parameters: []
-  '/account/:id':
-    get:
-      summary: ''
-      operationId: GetAccountInformation
-      responses:
-        '200':
-          description: OK
-      tags:
-        - Not done
-    post:
-      summary: ''
-      operationId: 'post-account-:id'
-      responses:
-        '200':
-          description: OK
   /transactions/send/topup:
     post:
       summary: ''
@@ -160,7 +187,7 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - send
+        - Not done
     parameters: []
     get:
       summary: Get Top-up Transfer Info
@@ -168,21 +195,21 @@ paths:
       responses:
         '200':
           description: OK
-      description: This endpoint describes how to get the info of a topup.
+      description: Get the information about a top up transfer.
       security:
         - SecretApiKey: []
       tags:
         - Not done
   /transactions/send/email:
     post:
-      summary: Email Money Transfer
+      summary: Send funds using e-transfer
       operationId: SendFundsEmail
       responses:
         '201':
           $ref: '#/components/responses/SendResponse'
         '400':
           description: Bad Request
-      description: Operation to send money through email money transfer.
+      description: Send/withdraw funds by sending an email money transfer.
       requestBody:
         content:
           application/json:
@@ -207,7 +234,7 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - Not done
+        - Send/Withdraw
     parameters: []
   /transactions/send/p2p:
     post:
@@ -218,7 +245,7 @@ paths:
           $ref: '#/components/responses/SendResponse'
         '400':
           description: Bad Request
-      description: Send funds to a person/bussiness account within the DUC App enviroment. Your funds will be received in his DUC App wallet.
+      description: Send funds directly to another DUC wallet account.
       security:
         - SecretApiKey: []
       requestBody:
@@ -242,7 +269,7 @@ paths:
                 - amount
                 - currency
       tags:
-        - Send
+        - Send/Withdraw
     parameters: []
   /transactions/send/delivery:
     post:
@@ -318,7 +345,7 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - Send
+        - Send/Withdraw
     parameters: []
   /transactions/send/creditcard:
     post:
@@ -381,11 +408,11 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - Send
+        - Send/Withdraw
   /transactions/exchange:
     post:
       summary: Exchange Currency
-      operationId: transactionsExchange
+      operationId: TransactionsExchange
       responses:
         '201':
           description: Created
@@ -404,7 +431,7 @@ paths:
                     type: number
         '400':
           description: Bad Request
-      description: You may want to exchange your funds between currencies to perform operations. This endpoint describes how.
+      description: Exchange funds between currencies within your account.
       security:
         - SecretApiKey: []
       requestBody:
@@ -426,7 +453,7 @@ paths:
                 - toCurrency
                 - amount
       tags:
-        - Send
+        - Send/Withdraw
 components:
   schemas:
     User:
@@ -510,7 +537,7 @@ components:
     ContactPhone:
       title: ContactPhone
       type: number
-      description: Contact of the person who is going to recieve the money.
+      description: Phone number of the person who is going to recieve the money.
     DeliveryCountry:
       title: DeliveryCountry
       type: string
@@ -536,7 +563,7 @@ components:
       type: string
       description: Address where you want the money to be delivered.
     DeliveryIdentity:
-      title: DeliveryIdentity
+      title: DeliveryIdentityCard
       type: integer
       description: 'Number of any Identity card of the receiver. '
     DeliveryPhone:
@@ -612,6 +639,10 @@ components:
       title: CardZipCode
       type: number
       description: ZipCode of the direction of your card.
+    DeliveryName:
+      title: DeliveryName
+      description: First name of the person that will receive the money.
+      type: string
   responses:
     BuyResponse:
       description: Response of a successful transactions-buy operation.
@@ -655,6 +686,6 @@ security:
   - SecretApiKey: []
   - API Key - 1: []
 tags:
-  - name: Buy
+  - name: Add/Buy
   - name: Not done
-  - name: Send
+  - name: Send/Withdraw
