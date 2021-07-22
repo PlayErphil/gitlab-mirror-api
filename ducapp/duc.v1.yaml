@@ -321,8 +321,8 @@ paths:
                   $ref: '#/components/schemas/Concept'
                 deliveryAddress:
                   $ref: '#/components/schemas/DeliveryAddress'
-                deliveryContact:
-                  $ref: '#/components/schemas/ReceiverPhone'
+                deliveryName:
+                  $ref: '#/components/schemas/DeliveryName'
                 deliveryID:
                   $ref: '#/components/schemas/DeliveryIdentity'
                 deliveryPhone:
@@ -353,7 +353,7 @@ paths:
                 - amount
                 - currency
                 - deliveryAddress
-                - deliveryContact
+                - deliveryName
                 - deliveryID
                 - deliveryPhone
                 - deliveryCountry
@@ -611,7 +611,7 @@ components:
       type: string
       description: Name of the card holder.
     ReceiverPhone:
-      title: ContactPhone
+      title: ReceiverPhone
       type: number
       description: Phone number of the person who will receive the money.
     DeliveryCountry:
