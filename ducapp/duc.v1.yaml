@@ -80,6 +80,7 @@ paths:
         - SecretApiKey: []
       tags:
         - Not done
+      x-internal: false
     parameters: []
   /transactions/buy/googlepay:
     post:
@@ -89,7 +90,7 @@ paths:
         '201':
           $ref: '#/components/responses/BuyResponse'
       tags:
-        - Not done
+        - To be implemented
       description: Add funds to your wallet using google pay.
       security:
         - SecretApiKey: []
@@ -99,6 +100,7 @@ paths:
             schema:
               type: object
               properties: {}
+      x-internal: true
     parameters: []
   /transactions/add/applepay:
     post:
@@ -108,7 +110,7 @@ paths:
         '201':
           $ref: '#/components/responses/BuyResponse'
       tags:
-        - Not done
+        - To be implemented
       description: Add funds to your wallet using google pay.
       security:
         - SecretApiKey: []
@@ -118,6 +120,7 @@ paths:
             schema:
               type: object
               properties: {}
+      x-internal: true
     parameters: []
   /transactions/add/p2p:
     post:
@@ -127,7 +130,7 @@ paths:
         '201':
           $ref: '#/components/responses/BuyResponse'
       tags:
-        - Not done
+        - To be implemented
       description: Add funds to your wallet through a p2p transaction by asking another user to send funds from their wallet directly to you. Everything happens within the DUC environment.
       security:
         - SecretApiKey: []
@@ -137,6 +140,7 @@ paths:
             schema:
               type: object
               properties: {}
+      x-internal: true
     parameters: []
   /transactions/add/email:
     post:
@@ -146,7 +150,7 @@ paths:
         '201':
           $ref: '#/components/responses/BuyResponse'
       tags:
-        - Not done
+        - To be implemented
       security:
         - SecretApiKey: []
       requestBody:
@@ -156,6 +160,7 @@ paths:
               type: object
               properties: {}
       description: Add funds to your wallet by sending an email money transfer to the DUC system.
+      x-internal: true
     parameters: []
   /transactions/add/bank:
     post:
@@ -165,8 +170,9 @@ paths:
         '200':
           description: OK
       tags:
-        - Not done
+        - To be implemented
       description: ''
+      x-internal: true
     parameters: []
   /transactions/send/topup:
     post:
@@ -186,6 +192,10 @@ paths:
                   $ref: '#/components/schemas/TopUpDestination'
                 product:
                   type: string
+                currency:
+                  type: string
+                walletAddress:
+                  type: string
                 '':
                   type: string
       security:
@@ -196,16 +206,6 @@ paths:
     get:
       summary: Get Top-up Transfer Info
       operationId: GetTopUpInfo
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  '':
-                    type: string
       description: Get the information about a top up transfer to a specific country.
       security:
         - SecretApiKey: []
@@ -221,6 +221,10 @@ paths:
                   $ref: '#/components/schemas/TopUpDestination'
                 currency:
                   $ref: '#/components/schemas/Currency'
+      responses:
+        '200':
+          description: OK
+      x-internal: true
   /transactions/send/email:
     post:
       summary: Send funds using e-transfer
@@ -251,21 +255,7 @@ paths:
                 - amount
                 - currency
                 - email
-            examples:
-              Example:
-                value:
-                  amount: 100
-                  currency: usd
-                  concept: null
-                  email: test@gmail.com
-                  walletAddress: 0
-              example-2:
-                value:
-                  amount: 333333
-                  currency: qqqq
-                  concept: consept
-                  email: uwu@yahoo.net
-                  walletAddress: 14345125235215251000
+            examples: {}
         description: ''
       security:
         - SecretApiKey: []
@@ -331,8 +321,8 @@ paths:
                   $ref: '#/components/schemas/Concept'
                 deliveryAddress:
                   $ref: '#/components/schemas/DeliveryAddress'
-                deliveryContact:
-                  $ref: '#/components/schemas/ReceiverPhone'
+                deliveryName:
+                  $ref: '#/components/schemas/DeliveryName'
                 deliveryID:
                   $ref: '#/components/schemas/DeliveryIdentity'
                 deliveryPhone:
@@ -363,7 +353,7 @@ paths:
                 - amount
                 - currency
                 - deliveryAddress
-                - deliveryContact
+                - deliveryName
                 - deliveryID
                 - deliveryPhone
                 - deliveryCountry
@@ -490,6 +480,56 @@ paths:
                 - amount
       tags:
         - Send/Withdraw
+  /user/register:
+    post:
+      summary: Register a new user
+      operationId: UserRegister
+      responses:
+        '200':
+          description: OK
+      description: Register a new user in the system
+      security:
+        - SecretApiKey: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                providerValue:
+                  type: string
+                password:
+                  $ref: '#/components/schemas/Password'
+                firstName:
+                  $ref: '#/components/schemas/FirstName'
+                isBusinessType:
+                  $ref: '#/components/schemas/isBusinessType'
+                defaultCurrency:
+                  $ref: '#/components/schemas/DefaultCurrency'
+                language:
+                  $ref: '#/components/schemas/Language'
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+        description: ''
+      tags:
+        - User
+  /user/update:
+    post:
+      summary: Update user information
+      operationId: UserUpdate
+      responses:
+        '200':
+          description: OK
+      description: Update user information
+      security:
+        - SecretApiKey: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
 components:
   schemas:
     User:
@@ -571,7 +611,7 @@ components:
       type: string
       description: Name of the card holder.
     ReceiverPhone:
-      title: ContactPhone
+      title: ReceiverPhone
       type: number
       description: Phone number of the person who will receive the money.
     DeliveryCountry:
@@ -676,6 +716,81 @@ components:
       title: TopUpDestination
       type: string
       description: 'Destination of the mobile recharge. e.g. India, Cuba.'
+    ProviderValue:
+      title: ProviderValue
+      type:
+        - string
+        - number
+      description: Email or phone number of user.
+    Password:
+      title: Password
+      type: string
+      description: 'The password must contain uppercase, lowercase, and at least one non-letter character.'
+    FirstName:
+      title: FirstName
+      type: string
+      description: Name of the user
+    LastName:
+      title: LastName
+      type: string
+      description: Last Name of the user
+    isBusinessType:
+      title: isBusinessType
+      type: boolean
+      description: Set 1 if your account is a business type or 0 if is not.
+    DefaultCurrency:
+      title: DefaultCurrency
+      type: string
+      description: Currency that you will use the most.
+    Language:
+      title: Language
+      type: string
+      description: ''
+    PhoneNumber:
+      title: PhoneNumber
+      type: object
+      properties:
+        id:
+          type: string
+      description: Phone number of the user.
+    Email:
+      title: Email
+      type: string
+      description: Email of the user.
+    UserID:
+      title: UserID
+      type: object
+      description: Identity License.
+      properties:
+        id:
+          type: number
+          description: Identity card number.
+        type:
+          type: string
+          description: 'Type of card E.g Driving license, Health card, identity license.'
+    Address:
+      title: Address
+      type: object
+      description: Address of the user
+      properties:
+        street:
+          type: string
+        houseNumber:
+          type: number
+        city:
+          type: string
+        country:
+          type: string
+        postalCode:
+          type: string
+    ReferralCode:
+      title: ReferralCode
+      type: string
+      description: Create your referral code and share it with a friend so that you both get a reward after their first transaction.
+    FromReferralCode:
+      title: FromReferralCode
+      type: string
+      description: Enter the referral code of the friend who invited you to the app so that both of you can get rewards after your first transaction. This is not required.
   responses:
     BuyResponse:
       description: Response of a successful transactions-buy operation.
@@ -722,3 +837,4 @@ tags:
   - name: Add/Buy
   - name: Not done
   - name: Send/Withdraw
+  - name: To be implemented
