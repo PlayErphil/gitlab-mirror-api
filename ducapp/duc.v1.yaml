@@ -838,3 +838,10 @@ tags:
   - name: Not done
   - name: Send/Withdraw
   - name: To be implemented
+info:
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  x-logo:
+    url: "https://redocly.github.io/redoc/petstore-logo.png"
+    backgroundColor: "#FFFFFF"
+    altText: "Petstore logo"
