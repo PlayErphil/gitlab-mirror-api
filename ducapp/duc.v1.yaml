@@ -80,6 +80,7 @@ paths:
         - SecretApiKey: []
       tags:
         - Not done
+      x-internal: false
     parameters: []
   /transactions/buy/googlepay:
     post:
@@ -90,6 +91,7 @@ paths:
           $ref: '#/components/responses/BuyResponse'
       tags:
         - Not done
+        - To be implemented
       description: Add funds to your wallet using google pay.
       security:
         - SecretApiKey: []
@@ -99,6 +101,7 @@ paths:
             schema:
               type: object
               properties: {}
+      x-internal: true
     parameters: []
   /transactions/add/applepay:
     post:
@@ -109,6 +112,7 @@ paths:
           $ref: '#/components/responses/BuyResponse'
       tags:
         - Not done
+        - To be implemented
       description: Add funds to your wallet using google pay.
       security:
         - SecretApiKey: []
@@ -118,6 +122,7 @@ paths:
             schema:
               type: object
               properties: {}
+      x-internal: true
     parameters: []
   /transactions/add/p2p:
     post:
@@ -128,6 +133,7 @@ paths:
           $ref: '#/components/responses/BuyResponse'
       tags:
         - Not done
+        - To be implemented
       description: Add funds to your wallet through a p2p transaction by asking another user to send funds from their wallet directly to you. Everything happens within the DUC environment.
       security:
         - SecretApiKey: []
@@ -137,6 +143,7 @@ paths:
             schema:
               type: object
               properties: {}
+      x-internal: true
     parameters: []
   /transactions/add/email:
     post:
@@ -147,6 +154,7 @@ paths:
           $ref: '#/components/responses/BuyResponse'
       tags:
         - Not done
+        - To be implemented
       security:
         - SecretApiKey: []
       requestBody:
@@ -156,6 +164,7 @@ paths:
               type: object
               properties: {}
       description: Add funds to your wallet by sending an email money transfer to the DUC system.
+      x-internal: true
     parameters: []
   /transactions/add/bank:
     post:
@@ -166,7 +175,9 @@ paths:
           description: OK
       tags:
         - Not done
+        - To be implemented
       description: ''
+      x-internal: true
     parameters: []
   /transactions/send/topup:
     post:
@@ -186,6 +197,10 @@ paths:
                   $ref: '#/components/schemas/TopUpDestination'
                 product:
                   type: string
+                currency:
+                  type: string
+                walletAddress:
+                  type: string
                 '':
                   type: string
       security:
@@ -196,16 +211,6 @@ paths:
     get:
       summary: Get Top-up Transfer Info
       operationId: GetTopUpInfo
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  '':
-                    type: string
       description: Get the information about a top up transfer to a specific country.
       security:
         - SecretApiKey: []
@@ -221,6 +226,10 @@ paths:
                   $ref: '#/components/schemas/TopUpDestination'
                 currency:
                   $ref: '#/components/schemas/Currency'
+      responses:
+        '200':
+          description: OK
+      x-internal: true
   /transactions/send/email:
     post:
       summary: Send funds using e-transfer
@@ -251,21 +260,7 @@ paths:
                 - amount
                 - currency
                 - email
-            examples:
-              Example:
-                value:
-                  amount: 100
-                  currency: usd
-                  concept: null
-                  email: test@gmail.com
-                  walletAddress: 0
-              example-2:
-                value:
-                  amount: 333333
-                  currency: qqqq
-                  concept: consept
-                  email: uwu@yahoo.net
-                  walletAddress: 14345125235215251000
+            examples: {}
         description: ''
       security:
         - SecretApiKey: []
@@ -722,3 +717,4 @@ tags:
   - name: Add/Buy
   - name: Not done
   - name: Send/Withdraw
+  - name: To be implemented
