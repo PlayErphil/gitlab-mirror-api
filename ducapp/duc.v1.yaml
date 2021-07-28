@@ -7,7 +7,7 @@ info:
     backgroundColor: '#FFFFFF'
     altText: DUC logo
     href: 'https://ducapp.com/'
-  description: Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.
+  description: Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below. test
   termsOfService: 'https://ducapp.com/statics/en/terms_conditions'
   contact:
     email: support@ducapp.com
