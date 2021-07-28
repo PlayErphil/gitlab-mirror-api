@@ -12,9 +12,11 @@ info:
   contact:
     email: support@ducapp.com
     name: DUC App Support
+    url: 'http://ducapp.com'
   license:
     name: © Copyright 2021 D.U.C. App Corporation. All rights reserved.
     url: 'http://api.ducapp.com'
+  summary: Duc Api documentation
 servers:
   - url: 'http://api.ducapp.com'
 paths:
@@ -600,11 +602,17 @@ paths:
                 firstName:
                   $ref: '#/components/schemas/FirstName'
                 isBusinessType:
-                  $ref: '#/components/schemas/isBusinessType'
+                  type: boolean
+                  description: |
+                    Is your account personal or bussiness type?
                 defaultCurrency:
                   $ref: '#/components/schemas/DefaultCurrency'
                 language:
                   $ref: '#/components/schemas/Language'
+              required:
+                - isBusinessType
+                - defaultCurrency
+                - language
           application/xml:
             schema:
               type: object
