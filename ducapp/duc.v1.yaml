@@ -3,10 +3,10 @@ info:
   title: DUC App Developer
   version: '1.0'
   x-logo:
-    url: "https://raw.githubusercontent.com/PlayErphil/duc-api/main/documentation/photo_2021-07-22%2014.40.42.jpeg"
-    backgroundColor: "#FFFFFF"
-    altText: "DUC logo"
-    href: "https://ducapp.com/"
+    url: 'https://raw.githubusercontent.com/PlayErphil/duc-api/main/documentation/photo_2021-07-22%2014.40.42.jpeg'
+    backgroundColor: '#FFFFFF'
+    altText: DUC logo
+    href: 'https://ducapp.com/'
   description: Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.
   termsOfService: 'https://ducapp.com/statics/en/terms_conditions'
   contact:
@@ -44,9 +44,50 @@ paths:
                 cardNumber:
                   $ref: '#/components/schemas/CardNumber'
                 cvc:
-                  $ref: ''
-                '':
+                  type: integer
+                  description: Three digit number in the back of your card.
+                expireDate:
+                  $ref: '#/components/schemas/ExpirationDate'
+                walletAddress:
+                  $ref: '#/components/schemas/WalletAddress'
+                streetName:
                   type: string
+                  description: Name of the street where your credit/debit is registered.
+                streetNumber:
+                  type: string
+                  description: Number of the house where your credit/debit is registered.
+                postalCode:
+                  type: string
+                  description: Postal code of the house where your credit/debit card is registered.
+                location:
+                  type: object
+                  description: Real time location of your device.
+                  properties:
+                    latitude:
+                      type: string
+                    longitude:
+                      type: string
+                    timestamp:
+                      type: string
+                mcpRate:
+                  type: object
+                  properties:
+                    mCPRateToken:
+                      type: string
+                    cardHolderCurrencyCode:
+                      type: string
+                    cardHolderAmount:
+                      type: string
+              required:
+                - amount
+                - currency
+                - creditCardID
+                - cardNumber
+                - cvc
+                - expireDate
+                - streetName
+                - streetNumber
+                - postalCode
           application/xml:
             schema:
               type: object
@@ -83,11 +124,11 @@ paths:
       description: Add funds to your wallet using a credit or debit card.
       security:
         - SecretApiKey: []
-      tags:
-        - Not done
       x-internal: false
+      tags:
+        - Add/Buy
     parameters: []
-  /transactions/buy/googlepay:
+  /transactions/add/googlepay:
     post:
       summary: Add funds with google pay
       operationId: AddFundsGooglePay
@@ -193,15 +234,43 @@ paths:
             schema:
               type: object
               properties:
-                destination:
-                  $ref: '#/components/schemas/TopUpDestination'
                 product:
-                  type: string
+                  type: number
+                  description: Value of the recharge that you want to put. Get the topup info to see the available options. If you select a non-available product it will return a bad request error.
+                operatorID:
+                  type: number
+                  description: 'The ID of the operator that corresponds to the telephone number to which the recharge is going to be carried out. In the case of Cuba, the ID is 3645 which corresponds to Cubacel.'
+                receiverName:
+                  $ref: '#/components/schemas/ReceiverName'
+                destinations:
+                  type: array
+                  description: Phone numbers you want to recharge. They must all be from the same country.
+                  items:
+                    type: number
                 currency:
-                  type: string
+                  $ref: '#/components/schemas/Currency'
+                scheduled:
+                  type: boolean
+                  description: Set 1 if you are going to schedule the recharge or 0 if you want it to be immediate.
+                postedDate:
+                  type: object
+                  description: Date you want the recharge to take place.
+                  properties:
+                    year:
+                      type: number
+                    month:
+                      type: number
+                      description: 'Note that month is 0-indexed, hence 0 is for january and 11 for december.'
+                    day:
+                      type: number
+                    hour:
+                      type: number
+                      description: 'Hour is in 24h format. Hence 11:00pm is 23:00 and 12:00am is 0:00.'
+                    minute:
+                      type: number
                 walletAddress:
-                  type: string
-                '':
+                  $ref: '#/components/schemas/WalletAddress'
+                deliveryCurrency:
                   type: string
       security:
         - SecretApiKey: []
@@ -229,6 +298,12 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad Request
       x-internal: true
   /transactions/send/email:
     post:
@@ -326,51 +401,61 @@ paths:
                   $ref: '#/components/schemas/Concept'
                 deliveryAddress:
                   $ref: '#/components/schemas/DeliveryAddress'
-                deliveryName:
-                  $ref: '#/components/schemas/DeliveryName'
+                deliveryFirstName:
+                  $ref: '#/components/schemas/DeliveryFirstName'
                 deliveryID:
                   $ref: '#/components/schemas/DeliveryIdentity'
                 deliveryPhone:
                   $ref: '#/components/schemas/ReceiverPhone'
-                deliveryCountry:
-                  $ref: '#/components/schemas/DeliveryCountry'
                 deliveryArea:
                   $ref: '#/components/schemas/DeliveryArea'
+                deliveryCountry:
+                  $ref: '#/components/schemas/DeliveryCountry'
                 deliveryCurrency:
                   $ref: '#/components/schemas/DeliveryCurrency'
-                deliveryAmount:
-                  $ref: '#/components/schemas/DeliveryAmount'
                 deliveryCountryCode:
                   $ref: '#/components/schemas/DeliveryCountryCode'
-                deliveryZone:
-                  $ref: '#/components/schemas/DeliveryZone'
                 deliveryCity:
                   $ref: '#/components/schemas/DeliveryCity'
-                walletAddress:
-                  $ref: '#/components/schemas/WalletAddress'
                 deliveryLastName:
                   $ref: '#/components/schemas/DeliveryLastName'
                 deliverySecondLastName:
                   $ref: '#/components/schemas/DeliverySecondLastName'
-                service:
-                  $ref: '#/components/schemas/Service'
+                walletAddress:
+                  $ref: '#/components/schemas/WalletAddress'
               required:
                 - amount
                 - currency
                 - deliveryAddress
-                - deliveryName
+                - deliveryFirstName
                 - deliveryID
                 - deliveryPhone
-                - deliveryCountry
                 - deliveryArea
+                - deliveryCountry
                 - deliveryCurrency
-                - deliveryAmount
                 - deliveryCountryCode
-                - deliveryZone
                 - deliveryCity
                 - deliveryLastName
                 - deliverySecondLastName
-                - service
+            examples:
+              example-1:
+                value:
+                  amount: 200
+                  currency: USD
+                  concept: ''
+                  deliveryAddress: '#254 Calle República'
+                  deliveryFirstName: Roberto
+                  deliveryID: 95011060454
+                  deliveryPhone: 0
+                  deliveryArea: string
+                  deliveryCountry: Cuba
+                  deliveryCurrency: CUP
+                  deliveryCountryCode: 53
+                  deliveryCity: Camagüey
+                  deliveryLastName: Rodríguez
+                  deliverySecondLastName: Morales
+                  service: ''
+                  walletAddress: 0
         description: ''
       parameters: []
       security:
@@ -483,6 +568,13 @@ paths:
                 - fromCurrency
                 - toCurrency
                 - amount
+            examples:
+              example-1:
+                value:
+                  fromCurrency: USD
+                  toCurrency: CAD
+                  amount: 100
+                  walletAddress: 0
       tags:
         - Send/Withdraw
   /user/register:
@@ -592,7 +684,7 @@ components:
     Service:
       title: Service
       type: string
-      description: ''
+      description: Type of service you
     Amount:
       title: Amount
       type: number
@@ -600,9 +692,10 @@ components:
     Currency:
       title: Currency
       type: string
-      description: Currency you want to use for the transaction.
+      description: Currency you want to use to pay the transaction.
     Concept:
-      allOf: []
+      type: string
+      description: Breif description of the operation. This is optional.
     BankName:
       title: BankName
       type: string
@@ -651,10 +744,6 @@ components:
       title: DeliveryArea
       type: string
       description: Area where the money will be delivered.
-    DeliveryZone:
-      title: DeliveryZone
-      type: string
-      description: Zone where the money will be delivered.
     DeliveryCity:
       title: DeliveryCity
       type: string
@@ -682,7 +771,7 @@ components:
     BuyAmount:
       title: BuyAmount
       type: number
-      description: 'This is totally not necessary. What is the point of having this here? You already have the amount, why buy amount again?'
+      description: Amount of funds you want to add to your wallet.
     ToAddress:
       title: ToAddress
       type: number
@@ -713,7 +802,7 @@ components:
       title: PostalCodeCard
       type: string
       description: Postal code of your card address.
-    DeliveryName:
+    DeliveryFirstName:
       title: DeliveryName
       description: First name of the person that will receive the money.
       type: string
@@ -739,7 +828,7 @@ components:
       title: LastName
       type: string
       description: Last Name of the user
-    isBusinessType:
+    IsBusinessType:
       title: isBusinessType
       type: boolean
       description: Set 1 if your account is a business type or 0 if is not.
@@ -796,6 +885,10 @@ components:
       title: FromReferralCode
       type: string
       description: Enter the referral code of the friend who invited you to the app so that both of you can get rewards after your first transaction. This is not required.
+    ReceiverName:
+      title: ReceiverName
+      type: string
+      description: Name of the receiver.
   responses:
     BuyResponse:
       description: Response of a successful transactions-buy operation.
@@ -818,7 +911,7 @@ components:
           schema:
             type: object
             properties:
-              Amount sent:
+              transactionID:
                 type: number
                 description: Amount sent.
               Amount subtracted:
