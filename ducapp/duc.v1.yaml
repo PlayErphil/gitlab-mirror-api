@@ -3,7 +3,7 @@ info:
   title: DUC App Developer
   version: '1.0'
   x-logo:
-    url: 'https://raw.githubusercontent.com/PlayErphil/duc-api/main/documentation/photo_2021-07-22%2014.40.42.jpeg'
+    url: 'https://github.com/PlayErphil/gitlab-mirror-api/blob/main/documentation/photo_2021-07-22%2014.40.42.jpeg'
     backgroundColor: '#FFFFFF'
     altText: DUC logo
     href: 'https://ducapp.com/'
