@@ -90,6 +90,30 @@ paths:
                 - streetName
                 - streetNumber
                 - postalCode
+            examples:
+              Example:
+                value:
+                  amount: 0
+                  currency: USD
+                  concept: ''
+                  creditCardID: Alfred Smith
+                  cardNumber: 4231 7575 2928 2022
+                  cvc: 234
+                  expireDate:
+                    month: 8
+                    year: 25
+                  walletAddress: null
+                  streetName: New Street
+                  streetNumber: '41'
+                  postalCode: N9P 5K6
+                  location:
+                    latitude: string
+                    longitude: string
+                    timestamp: string
+                  mcpRate:
+                    mCPRateToken: string
+                    cardHolderCurrencyCode: string
+                    cardHolderAmount: string
           application/xml:
             schema:
               type: object
@@ -905,6 +929,8 @@ components:
           schema:
             type: object
             properties:
+              transactionID:
+                type: string
               amountAdded:
                 type: number
                 description: Amount Added to the wallet.
@@ -920,7 +946,7 @@ components:
             type: object
             properties:
               transactionID:
-                type: number
+                type: string
                 description: Amount sent.
               Amount subtracted:
                 type: number
