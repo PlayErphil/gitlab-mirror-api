@@ -3,7 +3,7 @@ info:
   title: DUC App Developer
   version: '1.0'
   x-logo:
-    url: 'https://github.com/PlayErphil/gitlab-mirror-api/blob/main/documentation/photo_2021-07-22%2014.40.42.jpeg'
+    url: 'https://raw.githubusercontent.com/PlayErphil/gitlab-mirror-api/main/documentation/photo_2021-07-22%2014.40.42.jpeg'
     backgroundColor: '#FFFFFF'
     altText: DUC logo
     href: 'https://ducapp.com/'
@@ -301,7 +301,7 @@ paths:
       security:
         - SecretApiKey: []
       tags:
-        - Not done
+        - Add/Buy
     parameters: []
     get:
       summary: Get Top-up Transfer Info
@@ -309,8 +309,6 @@ paths:
       description: Get the information about a top up transfer to a specific country.
       security:
         - SecretApiKey: []
-      tags:
-        - Not done
       requestBody:
         content:
           application/json:
@@ -331,6 +329,8 @@ paths:
         '400':
           description: Bad Request
       x-internal: true
+      tags:
+        - Add/Buy
   /transactions/send/email:
     post:
       summary: Send funds using e-transfer
