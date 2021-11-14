@@ -3,8 +3,8 @@ info:
   title: DUC App Developer
   version: '1.0'
   x-logo:
-    url: 'https://raw.githubusercontent.com/PlayErphil/gitlab-mirror-api/main/img/logo.jpeg'
-    backgroundColor: '#FFFFFF'
+    url: 'img/logo.jpeg'
+    backgroundColor: '#fafafa'
     altText: DUC logo
     href: 'https://ducapp.com/'
   description: Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below. test
