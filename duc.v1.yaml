@@ -7,7 +7,7 @@ info:
     backgroundColor: '#fafafa'
     altText: DUC logo
     href: 'https://ducapp.com/'
-  description: Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below. test
+  description: Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.
   termsOfService: 'https://ducapp.com/statics/en/terms_conditions'
   contact:
     email: support@ducapp.com
@@ -18,7 +18,7 @@ info:
     url: 'http://api.ducapp.com'
   summary: Duc Api documentation
 servers:
-  - url: 'http://api.ducapp.com'
+  - url: 'https://backend.ducapp.net/'
 paths:
   /transactions/add/card:
     post:
@@ -487,9 +487,9 @@ paths:
       tags:
         - Send/Withdraw
     parameters: []
-  /transactions/send/creditcard:
+  /transactions/cash-out/creditcard:
     post:
-      summary: Cashout to credit card
+      summary: Cashout to Credit Card
       operationId: SendFundsCreditCard
       responses:
         '201':
@@ -549,6 +549,7 @@ paths:
         - SecretApiKey: []
       tags:
         - Send/Withdraw
+    parameters: []
   /transactions/exchange:
     post:
       summary: Exchange Currency
@@ -953,16 +954,11 @@ components:
                 type: number
                 description: Current amount in your wallet.
   securitySchemes:
-    HTTP:
-      type: http
-      scheme: basic
     SecretApiKey:
-      name: DUC-APIKEY
       type: apiKey
       in: header
 security:
   - SecretApiKey: []
-  - API Key - 1: []
 tags:
   - name: Add/Buy
   - name: Not done
