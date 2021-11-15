@@ -1,0 +1,1409 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "DUC App Developer",
+    "version": "1.0",
+    "x-logo": {
+      "url": "https://gitlab.com/PlayErphil/duc-api/-/raw/main/img/logo.jpeg",
+      "backgroundColor": "#fafafa",
+      "altText": "DUC logo",
+      "href": "https://ducapp.com/"
+    },
+    "description": "Welcome to the Duc App API documentation. You can explore the different ways to use our API and choose the right one for you below.",
+    "termsOfService": "https://ducapp.com/statics/en/terms_conditions",
+    "contact": {
+      "email": "support@ducapp.com",
+      "name": "DUC App Support",
+      "url": "http://ducapp.com"
+    },
+    "license": {
+      "name": "© Copyright 2021 D.U.C. App Corporation. All rights reserved.",
+      "url": "http://api.ducapp.com"
+    },
+    "summary": "Duc Api documentation"
+  },
+  "servers": [
+    {
+      "url": "https://backend.ducapp.net/"
+    }
+  ],
+  "paths": {
+    "/transactions/add/card": {
+      "post": {
+        "summary": "Add funds with credit/debit card",
+        "operationId": "AddFundsCard",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/BuyResponse"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "$ref": "#/components/schemas/Amount"
+                  },
+                  "currency": {
+                    "$ref": "#/components/schemas/Currency"
+                  },
+                  "concept": {
+                    "$ref": "#/components/schemas/Concept"
+                  },
+                  "creditCardID": {
+                    "$ref": "#/components/schemas/CardHolderName"
+                  },
+                  "cardNumber": {
+                    "$ref": "#/components/schemas/CardNumber"
+                  },
+                  "cvc": {
+                    "type": "integer",
+                    "description": "Three digit number in the back of your card."
+                  },
+                  "expireDate": {
+                    "$ref": "#/components/schemas/ExpirationDate"
+                  },
+                  "walletAddress": {
+                    "$ref": "#/components/schemas/WalletAddress"
+                  },
+                  "streetName": {
+                    "type": "string",
+                    "description": "Name of the street where your credit/debit is registered."
+                  },
+                  "streetNumber": {
+                    "type": "string",
+                    "description": "Number of the house where your credit/debit is registered."
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "description": "Postal code of the house where your credit/debit card is registered."
+                  },
+                  "location": {
+                    "type": "object",
+                    "description": "Real time location of your device.",
+                    "properties": {
+                      "latitude": {
+                        "type": "string"
+                      },
+                      "longitude": {
+                        "type": "string"
+                      },
+                      "timestamp": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "mcpRate": {
+                    "type": "object",
+                    "properties": {
+                      "mCPRateToken": {
+                        "type": "string"
+                      },
+                      "cardHolderCurrencyCode": {
+                        "type": "string"
+                      },
+                      "cardHolderAmount": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "amount",
+                  "currency",
+                  "creditCardID",
+                  "cardNumber",
+                  "cvc",
+                  "expireDate",
+                  "streetName",
+                  "streetNumber",
+                  "postalCode"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "amount": 0,
+                    "currency": "USD",
+                    "concept": "",
+                    "creditCardID": "Alfred Smith",
+                    "cardNumber": "4231 7575 2928 2022",
+                    "cvc": 234,
+                    "expireDate": {
+                      "month": 8,
+                      "year": 25
+                    },
+                    "walletAddress": null,
+                    "streetName": "New Street",
+                    "streetNumber": "41",
+                    "postalCode": "N9P 5K6",
+                    "location": {
+                      "latitude": "string",
+                      "longitude": "string",
+                      "timestamp": "string"
+                    },
+                    "mcpRate": {
+                      "mCPRateToken": "string",
+                      "cardHolderCurrencyCode": "string",
+                      "cardHolderAmount": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "text/html": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/EDI-X12": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/EDIFACT": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/atom+xml": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/font-woff": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": ""
+        },
+        "description": "Add funds to your wallet using a credit or debit card.",
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "x-internal": false,
+        "tags": [
+          "Add/Buy"
+        ]
+      },
+      "parameters": []
+    },
+    "/transactions/add/googlepay": {
+      "post": {
+        "summary": "Add funds with google pay",
+        "operationId": "AddFundsGooglePay",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/BuyResponse"
+          }
+        },
+        "tags": [
+          "To be implemented"
+        ],
+        "description": "Add funds to your wallet using google pay.",
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "x-internal": true
+      },
+      "parameters": []
+    },
+    "/transactions/add/applepay": {
+      "post": {
+        "summary": "Add funds with apple pay",
+        "operationId": "AddFundsApplePay",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/BuyResponse"
+          }
+        },
+        "tags": [
+          "To be implemented"
+        ],
+        "description": "Add funds to your wallet using google pay.",
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "x-internal": true
+      },
+      "parameters": []
+    },
+    "/transactions/add/p2p": {
+      "post": {
+        "summary": "Add funds from a p2p transaction",
+        "operationId": "AddFundsPerson",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/BuyResponse"
+          }
+        },
+        "tags": [
+          "To be implemented"
+        ],
+        "description": "Add funds to your wallet through a p2p transaction by asking another user to send funds from their wallet directly to you. Everything happens within the DUC environment.",
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "x-internal": true
+      },
+      "parameters": []
+    },
+    "/transactions/add/email": {
+      "post": {
+        "summary": "Add funds using email money transfer",
+        "operationId": "AddFundsEmail",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/BuyResponse"
+          }
+        },
+        "tags": [
+          "To be implemented"
+        ],
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "description": "Add funds to your wallet by sending an email money transfer to the DUC system.",
+        "x-internal": true
+      },
+      "parameters": []
+    },
+    "/transactions/add/bank": {
+      "post": {
+        "summary": "",
+        "operationId": "AddFundsBank",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "To be implemented"
+        ],
+        "description": "",
+        "x-internal": true
+      },
+      "parameters": []
+    },
+    "/transactions/send/topup": {
+      "post": {
+        "summary": "Topup Transfer",
+        "operationId": "SendTopUp",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Send a mobile recharge to a phone.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "product": {
+                    "type": "number",
+                    "description": "Value of the recharge that you want to put. Get the topup info to see the available options. If you select a non-available product it will return a bad request error."
+                  },
+                  "operatorID": {
+                    "type": "number",
+                    "description": "The ID of the operator that corresponds to the telephone number to which the recharge is going to be carried out. In the case of Cuba, the ID is 3645 which corresponds to Cubacel."
+                  },
+                  "receiverName": {
+                    "$ref": "#/components/schemas/ReceiverName"
+                  },
+                  "destinations": {
+                    "type": "array",
+                    "description": "Phone numbers you want to recharge. They must all be from the same country.",
+                    "items": {
+                      "type": "number"
+                    }
+                  },
+                  "currency": {
+                    "$ref": "#/components/schemas/Currency"
+                  },
+                  "scheduled": {
+                    "type": "boolean",
+                    "description": "Set 1 if you are going to schedule the recharge or 0 if you want it to be immediate."
+                  },
+                  "postedDate": {
+                    "type": "object",
+                    "description": "Date you want the recharge to take place.",
+                    "properties": {
+                      "year": {
+                        "type": "number"
+                      },
+                      "month": {
+                        "type": "number",
+                        "description": "Note that month is 0-indexed, hence 0 is for january and 11 for december."
+                      },
+                      "day": {
+                        "type": "number"
+                      },
+                      "hour": {
+                        "type": "number",
+                        "description": "Hour is in 24h format. Hence 11:00pm is 23:00 and 12:00am is 0:00."
+                      },
+                      "minute": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "walletAddress": {
+                    "$ref": "#/components/schemas/WalletAddress"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "tags": [
+          "Add/Buy"
+        ]
+      },
+      "parameters": [],
+      "get": {
+        "summary": "Get Top-up Transfer Info",
+        "operationId": "GetTopUpInfo",
+        "description": "Get the information about a top up transfer to a specific country.",
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "destination": {
+                    "$ref": "#/components/schemas/TopUpDestination"
+                  },
+                  "currency": {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "x-internal": true,
+        "tags": [
+          "Add/Buy"
+        ]
+      }
+    },
+    "/transactions/send/email": {
+      "post": {
+        "summary": "Send funds using e-transfer",
+        "operationId": "SendFundsEmail",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/SendResponse"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "description": "Send/withdraw funds by sending an email money transfer.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "$ref": "#/components/schemas/Amount"
+                  },
+                  "currency": {
+                    "$ref": "#/components/schemas/Currency"
+                  },
+                  "concept": {
+                    "$ref": "#/components/schemas/Concept"
+                  },
+                  "email": {
+                    "$ref": "#/components/schemas/EmailToSend"
+                  },
+                  "walletAddress": {
+                    "$ref": "#/components/schemas/WalletAddress"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "currency",
+                  "email"
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "description": ""
+        },
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "tags": [
+          "Send/Withdraw"
+        ]
+      },
+      "parameters": []
+    },
+    "/transactions/send/p2p": {
+      "post": {
+        "summary": "P2P transfer",
+        "operationId": "SendFundsPerson",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/SendResponse"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "description": "Send funds directly to another DUC wallet account.",
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "toAddress": {
+                    "$ref": "#/components/schemas/ToAddress"
+                  },
+                  "amount": {
+                    "$ref": "#/components/schemas/Amount"
+                  },
+                  "currency": {
+                    "$ref": "#/components/schemas/Currency"
+                  },
+                  "concept": {
+                    "$ref": "#/components/schemas/Concept"
+                  },
+                  "walletAddress": {
+                    "$ref": "#/components/schemas/WalletAddress"
+                  }
+                },
+                "required": [
+                  "toAddress",
+                  "amount",
+                  "currency"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "Send/Withdraw"
+        ]
+      },
+      "parameters": []
+    },
+    "/transactions/send/delivery": {
+      "post": {
+        "summary": "Home delivery",
+        "operationId": "SendFundsCountry",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/SendResponse"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "description": "Send cash to your home using our home delivery service.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "$ref": "#/components/schemas/Amount"
+                  },
+                  "currency": {
+                    "$ref": "#/components/schemas/Currency"
+                  },
+                  "concept": {
+                    "$ref": "#/components/schemas/Concept"
+                  },
+                  "deliveryAddress": {
+                    "$ref": "#/components/schemas/DeliveryAddress"
+                  },
+                  "deliveryFirstName": {
+                    "$ref": "#/components/schemas/DeliveryFirstName"
+                  },
+                  "deliveryID": {
+                    "$ref": "#/components/schemas/DeliveryIdentity"
+                  },
+                  "deliveryPhone": {
+                    "$ref": "#/components/schemas/ReceiverPhone"
+                  },
+                  "deliveryArea": {
+                    "$ref": "#/components/schemas/DeliveryArea"
+                  },
+                  "deliveryCountry": {
+                    "$ref": "#/components/schemas/DeliveryCountry"
+                  },
+                  "deliveryCurrency": {
+                    "$ref": "#/components/schemas/DeliveryCurrency"
+                  },
+                  "deliveryCountryCode": {
+                    "$ref": "#/components/schemas/DeliveryCountryCode"
+                  },
+                  "deliveryCity": {
+                    "$ref": "#/components/schemas/DeliveryCity"
+                  },
+                  "deliveryLastName": {
+                    "$ref": "#/components/schemas/DeliveryLastName"
+                  },
+                  "deliverySecondLastName": {
+                    "$ref": "#/components/schemas/DeliverySecondLastName"
+                  },
+                  "walletAddress": {
+                    "$ref": "#/components/schemas/WalletAddress"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "currency",
+                  "deliveryAddress",
+                  "deliveryFirstName",
+                  "deliveryID",
+                  "deliveryPhone",
+                  "deliveryArea",
+                  "deliveryCountry",
+                  "deliveryCurrency",
+                  "deliveryCountryCode",
+                  "deliveryCity",
+                  "deliveryLastName",
+                  "deliverySecondLastName"
+                ]
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "amount": 200,
+                    "currency": "USD",
+                    "concept": "",
+                    "deliveryAddress": "#254 Calle República",
+                    "deliveryFirstName": "Roberto",
+                    "deliveryID": 95011060454,
+                    "deliveryPhone": 0,
+                    "deliveryArea": "string",
+                    "deliveryCountry": "Cuba",
+                    "deliveryCurrency": "CUP",
+                    "deliveryCountryCode": 53,
+                    "deliveryCity": "Camagüey",
+                    "deliveryLastName": "Rodríguez",
+                    "deliverySecondLastName": "Morales",
+                    "service": "",
+                    "walletAddress": 0
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "parameters": [],
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "tags": [
+          "Send/Withdraw"
+        ]
+      },
+      "parameters": []
+    },
+    "/transactions/cash-out/creditcard": {
+      "post": {
+        "summary": "Cashout to Credit Card",
+        "operationId": "SendFundsCreditCard",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/SendResponse"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "description": "Cashout funds to a credit card",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "service": {
+                    "$ref": "#/components/schemas/Service"
+                  },
+                  "amount": {
+                    "$ref": "#/components/schemas/Amount"
+                  },
+                  "currency": {
+                    "$ref": "#/components/schemas/Currency"
+                  },
+                  "concept": {
+                    "$ref": "#/components/schemas/Concept"
+                  },
+                  "cardNumber": {
+                    "$ref": "#/components/schemas/CardNumber"
+                  },
+                  "cardHolderName": {
+                    "$ref": "#/components/schemas/CardHolderName"
+                  },
+                  "verifyCardNumber": {
+                    "$ref": "#/components/schemas/CardNumber"
+                  },
+                  "bankName": {
+                    "$ref": "#/components/schemas/BankName"
+                  },
+                  "contactPhone": {
+                    "$ref": "#/components/schemas/ReceiverPhone"
+                  },
+                  "deliveryCurrency": {
+                    "$ref": "#/components/schemas/DeliveryCurrency"
+                  },
+                  "deliveryCountry": {
+                    "$ref": "#/components/schemas/DeliveryCountry"
+                  },
+                  "deliveryAmount": {
+                    "$ref": "#/components/schemas/DeliveryAmount"
+                  },
+                  "deliveryCountryCode": {
+                    "$ref": "#/components/schemas/DeliveryCountryCode"
+                  },
+                  "walletAddress": {
+                    "$ref": "#/components/schemas/WalletAddress"
+                  }
+                },
+                "required": [
+                  "service",
+                  "amount",
+                  "currency",
+                  "cardNumber",
+                  "cardHolderName",
+                  "verifyCardNumber",
+                  "bankName",
+                  "contactPhone",
+                  "deliveryCurrency",
+                  "deliveryCountry",
+                  "deliveryAmount",
+                  "deliveryCountryCode"
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "tags": [
+          "Send/Withdraw"
+        ]
+      },
+      "parameters": []
+    },
+    "/transactions/exchange": {
+      "post": {
+        "summary": "Exchange Currency",
+        "operationId": "TransactionsExchange",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fromCurrencyLeft": {
+                      "type": "number"
+                    },
+                    "toCurrencyCurrent": {
+                      "type": "number"
+                    },
+                    "toCurrencyAdded": {
+                      "type": "number"
+                    },
+                    "fromCurrencySubtracted": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "description": "Exchange funds between currencies within your account.",
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fromCurrency": {
+                    "$ref": "#/components/schemas/FromCurrency"
+                  },
+                  "toCurrency": {
+                    "$ref": "#/components/schemas/ToCurrency"
+                  },
+                  "amount": {
+                    "$ref": "#/components/schemas/Amount"
+                  },
+                  "walletAddress": {
+                    "$ref": "#/components/schemas/WalletAddress"
+                  }
+                },
+                "required": [
+                  "fromCurrency",
+                  "toCurrency",
+                  "amount"
+                ]
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "fromCurrency": "USD",
+                    "toCurrency": "CAD",
+                    "amount": 100,
+                    "walletAddress": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Send/Withdraw"
+        ]
+      }
+    },
+    "/user/register": {
+      "post": {
+        "summary": "Register a new user",
+        "operationId": "UserRegister",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Register a new user in the system",
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "providerValue": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "$ref": "#/components/schemas/Password"
+                  },
+                  "firstName": {
+                    "$ref": "#/components/schemas/FirstName"
+                  },
+                  "isBusinessType": {
+                    "type": "boolean",
+                    "description": "Is your account personal or bussiness type?\n"
+                  },
+                  "defaultCurrency": {
+                    "$ref": "#/components/schemas/DefaultCurrency"
+                  },
+                  "language": {
+                    "$ref": "#/components/schemas/Language"
+                  }
+                },
+                "required": [
+                  "isBusinessType",
+                  "defaultCurrency",
+                  "language"
+                ]
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": ""
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/update": {
+      "post": {
+        "summary": "Update user information",
+        "operationId": "UserUpdate",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Update user information",
+        "security": [
+          {
+            "SecretApiKey": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "title": "DeliveryCity",
+        "type": "object",
+        "description": "deliveryCity",
+        "examples": [
+          {
+            "id": 142,
+            "firstName": "Alice",
+            "lastName": "Smith",
+            "email": "alice.smith@gmail.com",
+            "dateOfBirth": "1997-10-31",
+            "emailVerified": true,
+            "signUpDate": "2019-08-24"
+          }
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the given user."
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "example": "1997-10-31"
+          },
+          "emailVerified": {
+            "type": "boolean",
+            "description": "Set to true if the user's email has been verified."
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date that the user was created."
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "emailVerified"
+        ]
+      },
+      "ErrorBody": {
+        "title": "ErrorBody",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "": {
+            "type": "string"
+          }
+        }
+      },
+      "Service": {
+        "title": "Service",
+        "type": "string",
+        "description": "Type of service you"
+      },
+      "Amount": {
+        "title": "Amount",
+        "type": "number",
+        "description": "Amount of money you want to use in the transaction."
+      },
+      "Currency": {
+        "title": "Currency",
+        "type": "string",
+        "description": "Currency you want to use to pay the transaction."
+      },
+      "Concept": {
+        "type": "string",
+        "description": "Breif description of the operation. This is optional."
+      },
+      "BankName": {
+        "title": "BankName",
+        "type": "string",
+        "description": "Name of the bank of your credit/debit card."
+      },
+      "CardNumber": {
+        "title": "CardNumber",
+        "type": "integer",
+        "description": "Number of your credit/debit card."
+      },
+      "CardHolderName": {
+        "title": "CardHolderName",
+        "type": "string",
+        "description": "Name of the card holder."
+      },
+      "ReceiverPhone": {
+        "title": "ReceiverPhone",
+        "type": "number",
+        "description": "Phone number of the person who will receive the money."
+      },
+      "DeliveryCountry": {
+        "title": "DeliveryCountry",
+        "type": "string",
+        "description": "Country where the money should be delivered."
+      },
+      "DeliveryCurrency": {
+        "title": "DeliveryCurrency",
+        "description": "Currency in which you want the money to be delivered.",
+        "type": "string"
+      },
+      "DeliveryAmount": {
+        "title": "DeliveryAmount",
+        "type": "number",
+        "description": "Amount that will be recieved."
+      },
+      "DeliveryCountryCode": {
+        "title": "DeliveryCountryCode",
+        "type": "number",
+        "description": "Country code of delivery."
+      },
+      "WalletAddress": {
+        "title": "WalletAddress",
+        "type": "number",
+        "description": "Wallet address of the user who is making the transaction. This is not required and if not completed, your wallet address will be used automatically."
+      },
+      "DeliveryAddress": {
+        "title": "DeliveryAddress",
+        "type": "string",
+        "description": "Address where you want the money to be delivered."
+      },
+      "DeliveryIdentity": {
+        "title": "DeliveryIdentityCard",
+        "type": "integer",
+        "description": "Number of any Identity card of the receiver. "
+      },
+      "DeliveryArea": {
+        "title": "DeliveryArea",
+        "type": "string",
+        "description": "Area where the money will be delivered."
+      },
+      "DeliveryCity": {
+        "title": "DeliveryCity",
+        "type": "string",
+        "description": "City where the money will be delivered."
+      },
+      "DeliveryLastName": {
+        "title": "DeliveryLastName",
+        "type": "string",
+        "description": "Last name of the person who will receive the money."
+      },
+      "DeliverySecondLastName": {
+        "title": "DeliverySecondLastName",
+        "type": "string",
+        "description": "Second last name of the person who will receive the money."
+      },
+      "EmailToSend": {
+        "title": "EmailToSend",
+        "type": "string",
+        "description": "Email of the person/business who will receive the money."
+      },
+      "FromCurrency": {
+        "title": "FromCurrency",
+        "type": "string",
+        "description": "Currency you want to convert from."
+      },
+      "ToCurrency": {
+        "title": "ToCurrency",
+        "type": "string",
+        "description": "Currency you want to convert to."
+      },
+      "BuyAmount": {
+        "title": "BuyAmount",
+        "type": "number",
+        "description": "Amount of funds you want to add to your wallet."
+      },
+      "ToAddress": {
+        "title": "ToAddress",
+        "type": "number",
+        "description": "Wallet address of the person/business you want to send the money to. Note that the address is not an email, is a the address of the DUC wallet."
+      },
+      "CVC": {
+        "title": "CVC",
+        "type": "integer",
+        "description": "Three digits on the back of your card"
+      },
+      "ExpirationDate": {
+        "title": "ExpirationDate",
+        "type": "object",
+        "description": "Date of expiration of your credit/debit card.",
+        "properties": {
+          "month": {
+            "type": "integer",
+            "description": "Use two digits format E.g. 04"
+          },
+          "year": {
+            "type": "integer",
+            "description": "Use two digits format E.g. 25"
+          }
+        },
+        "required": [
+          "month",
+          "year"
+        ]
+      },
+      "CardStreetName": {
+        "title": "CardStreetName",
+        "type": "string",
+        "description": "Street Name where your card is registered."
+      },
+      "PostalCode": {
+        "title": "PostalCodeCard",
+        "type": "string",
+        "description": "Postal code of your card address."
+      },
+      "DeliveryFirstName": {
+        "title": "DeliveryName",
+        "description": "First name of the person that will receive the money.",
+        "type": "string"
+      },
+      "TopUpDestination": {
+        "title": "TopUpDestination",
+        "type": "string",
+        "description": "Destination of the mobile recharge. e.g. India, Cuba."
+      },
+      "ProviderValue": {
+        "title": "ProviderValue",
+        "type": [
+          "string",
+          "number"
+        ],
+        "description": "Email or phone number of user."
+      },
+      "Password": {
+        "title": "Password",
+        "type": "string",
+        "description": "The password must contain uppercase, lowercase, and at least one non-letter character."
+      },
+      "FirstName": {
+        "title": "FirstName",
+        "type": "string",
+        "description": "Name of the user"
+      },
+      "LastName": {
+        "title": "LastName",
+        "type": "string",
+        "description": "Last Name of the user"
+      },
+      "IsBusinessType": {
+        "title": "isBusinessType",
+        "type": "boolean",
+        "description": "Set 1 if your account is a business type or 0 if is not."
+      },
+      "DefaultCurrency": {
+        "title": "DefaultCurrency",
+        "type": "string",
+        "description": "Currency that you will use the most."
+      },
+      "Language": {
+        "title": "Language",
+        "type": "string",
+        "description": ""
+      },
+      "PhoneNumber": {
+        "title": "PhoneNumber",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "description": "Phone number of the user."
+      },
+      "Email": {
+        "title": "Email",
+        "type": "string",
+        "description": "Email of the user."
+      },
+      "UserID": {
+        "title": "UserID",
+        "type": "object",
+        "description": "Identity License.",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Identity card number."
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of card E.g Driving license, Health card, identity license."
+          }
+        }
+      },
+      "Address": {
+        "title": "Address",
+        "type": "object",
+        "description": "Address of the user",
+        "properties": {
+          "street": {
+            "type": "string"
+          },
+          "houseNumber": {
+            "type": "number"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          }
+        }
+      },
+      "ReferralCode": {
+        "title": "ReferralCode",
+        "type": "string",
+        "description": "Create your referral code and share it with a friend so that you both get a reward after their first transaction."
+      },
+      "FromReferralCode": {
+        "title": "FromReferralCode",
+        "type": "string",
+        "description": "Enter the referral code of the friend who invited you to the app so that both of you can get rewards after your first transaction. This is not required."
+      },
+      "ReceiverName": {
+        "title": "ReceiverName",
+        "type": "string",
+        "description": "Name of the receiver."
+      }
+    },
+    "responses": {
+      "BuyResponse": {
+        "description": "Response of a successful transactions-buy operation.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transactionID": {
+                  "type": "string"
+                },
+                "amountAdded": {
+                  "type": "number",
+                  "description": "Amount Added to the wallet."
+                },
+                "currentAmount": {
+                  "type": "number",
+                  "description": "Current Amount in the wallet."
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      },
+      "SendResponse": {
+        "description": "Response of a successful transactions-send operation.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transactionID": {
+                  "type": "string",
+                  "description": "Amount sent."
+                },
+                "Amount subtracted": {
+                  "type": "number",
+                  "description": "Amount used in the transaction."
+                },
+                "Amount left": {
+                  "type": "number",
+                  "description": "Current amount in your wallet."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "SecretApiKey": {
+        "type": "apiKey",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "SecretApiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Add/Buy"
+    },
+    {
+      "name": "Not done"
+    },
+    {
+      "name": "Send/Withdraw"
+    },
+    {
+      "name": "To be implemented"
+    }
+  ]
+}
